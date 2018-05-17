@@ -77,8 +77,12 @@
         <li><strong>Jagdish Ghimire:</strong> Hailing originally from
           Kathmandu, Nepal, Jagdish is a rising sophomore at Fisk University
           in Nashville and enjoys music, hiking and memes..</li>
-        <li><strong>Jason Lopez:</strong> (TBD)</li>
-        <li><strong>Will Schmitt - PA:</strong> (TBD)</li>
+        <li><strong>Jason Lopez:</strong> Jason attends St Edward's University,
+          is from Houston, Texas, and loves rock climbing and running in his
+          free time.</li>
+        <li><strong>Will Schmitt - PA:</strong> Will is from New England,
+          went to RPI, and loves to brew beer on the weekends! He is also the
+          best project advisor ever and is VERY modest.</li>
       </ul>
     </div>
   </div>
