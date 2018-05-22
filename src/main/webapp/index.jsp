@@ -35,7 +35,9 @@
   <div id="container">
     <div
       style="width:75%; margin-left:auto; margin-right:auto; margin-top: 50px;">
-
+      
+      <h1>CodeU Chat App</h1>
+      <h2>Brought to you by The Charmers. Welcome!</h2>
       <h1>ChatApp Team3</h1>
       <h2>Welcome!</h2>
 
