@@ -126,7 +126,7 @@ public class ChatServlet extends HttpServlet {
 
     String username = (String) request.getSession().getAttribute("user");
     if (username == null) {
-      // user is not logged in, don't let them add a message
+      // user is not logged in, don't let them add a message.
       response.sendRedirect("/login");
       return;
     }
@@ -152,10 +152,6 @@ public class ChatServlet extends HttpServlet {
 
     // this removes any HTML from the message content
     String cleanedMessageContent = Jsoup.clean(messageContent, Whitelist.none());
-    //Parser parser = Parser.builder().build();
-    //Node document = parser.parse(cleanedMessageContent);
-    //HtmlRenderer renderer = HtmlRenderer.builder().build();
-    //String html = renderer.renderer(document);
     MutableDataSet options = new MutableDataSet();
     Parser parser = Parser.builder(options).build();
     HtmlRenderer renderer = HtmlRenderer.builder(options).build();
