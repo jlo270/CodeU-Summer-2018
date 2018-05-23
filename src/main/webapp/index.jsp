@@ -36,7 +36,7 @@
     <div
       style="width:75%; margin-left:auto; margin-right:auto; margin-top: 50px;">
 
-      <h1>ChatApp Team3</h1>
+      <h1>ChatApp by The Charmers</h1>
       <h2>Welcome!</h2>
 
       <ul>
