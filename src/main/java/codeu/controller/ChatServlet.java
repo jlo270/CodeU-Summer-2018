@@ -134,7 +134,7 @@ public class ChatServlet extends HttpServlet {
     User user = userStore.getUser(username);
     if (user == null) {
       // user was not found, don't let them add a message
-      response.sendRedirect("/login");
+      response.sendRedirect("/log in");
       return;
     }
 

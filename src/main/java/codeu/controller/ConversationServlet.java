@@ -41,7 +41,7 @@ public class ConversationServlet extends HttpServlet {
    * running in a server, not when running in a test.
    */
   @Override
-  public void init() throws  ServletException {
+  public void init() throws ServletException {
     super.init();
     setUserStore(UserStore.getInstance());
     setConversationStore(ConversationStore.getInstance());
