@@ -35,8 +35,15 @@
   <div id="container">
     <div
       style="width:75%; margin-left:auto; margin-right:auto; margin-top: 50px;">
+<<<<<<< HEAD
 
       <h1>ChatApp by The Charmers</h1>
+=======
+      
+      <h1>CodeU Chat App</h1>
+      <h2>Brought to you by The Charmers. Welcome!</h2>
+      <h1>ChatApp Team3</h1>
+>>>>>>> f6104ae4d79252d6739481332e8edd1ebbd90c2c
       <h2>Welcome!</h2>
 
       <ul>
