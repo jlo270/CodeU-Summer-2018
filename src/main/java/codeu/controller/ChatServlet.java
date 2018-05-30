@@ -15,6 +15,8 @@
 package codeu.controller;
 
 import codeu.model.data.Conversation;
+
+
 import codeu.model.data.Message;
 import codeu.model.data.User;
 import codeu.model.store.basic.ConversationStore;
@@ -30,6 +32,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.jsoup.Jsoup;
 import org.jsoup.safety.Whitelist;
+
+import com.vladsch.flexmark.ast.Node;
+import com.vladsch.flexmark.html.HtmlRenderer;
+import com.vladsch.flexmark.parser.Parser;
+import com.vladsch.flexmark.util.options.MutableDataSet;
 
 /** Servlet class responsible for the chat page. */
 public class ChatServlet extends HttpServlet {
@@ -96,9 +103,12 @@ public class ChatServlet extends HttpServlet {
     }
 
     UUID conversationId = conversation.getId();
+  
 
     List<Message> messages = messageStore.getMessagesInConversation(conversationId);
 
+    
+    
     request.setAttribute("conversation", conversation);
     request.setAttribute("messages", messages);
     request.getRequestDispatcher("/WEB-INF/view/chat.jsp").forward(request, response);
@@ -116,7 +126,7 @@ public class ChatServlet extends HttpServlet {
 
     String username = (String) request.getSession().getAttribute("user");
     if (username == null) {
-      // user is not logged in, don't let them add a message
+      // user is not logged in, don't let them add a message.
       response.sendRedirect("/login");
       return;
     }
@@ -124,7 +134,7 @@ public class ChatServlet extends HttpServlet {
     User user = userStore.getUser(username);
     if (user == null) {
       // user was not found, don't let them add a message
-      response.sendRedirect("/login");
+      response.sendRedirect("/log in");
       return;
     }
 
@@ -142,13 +152,19 @@ public class ChatServlet extends HttpServlet {
 
     // this removes any HTML from the message content
     String cleanedMessageContent = Jsoup.clean(messageContent, Whitelist.none());
+    MutableDataSet options = new MutableDataSet();
+    Parser parser = Parser.builder(options).build();
+    HtmlRenderer renderer = HtmlRenderer.builder(options).build();
+    Node document = parser.parse(cleanedMessageContent);
+    String html = renderer.render(document);
+    
 
     Message message =
         new Message(
             UUID.randomUUID(),
             conversation.getId(),
             user.getId(),
-            cleanedMessageContent,
+            html,
             Instant.now());
 
     messageStore.addMessage(message);
