@@ -70,7 +70,7 @@ public class ConversationStore {
   }
 
 /** Access the current amount of all conversations **/
-  public static int getNumConversations() {
+  public int getNumConversations() {
 	  return conversations.size();
   }
   

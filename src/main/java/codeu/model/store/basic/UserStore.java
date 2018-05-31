@@ -59,7 +59,7 @@ public class UserStore {
   private List<User> users;
   
   /** Access the current amount of users **/
-  public static int getNumUsers() {
+  public int getNumUsers() {
 	  return users.size();
   }
 
