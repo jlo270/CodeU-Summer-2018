@@ -58,6 +58,11 @@ public class MessageStore {
 
   /** The in-memory list of Messages. */
   private List<Message> messages;
+  
+  /** Access the current amount of messages **/
+  public int getNumMessages() {
+	  return messages.size();
+  }
 
   /** This class is a singleton, so its constructor is private. Call getInstance() instead. */
   private MessageStore(PersistentStorageAgent persistentStorageAgent) {
