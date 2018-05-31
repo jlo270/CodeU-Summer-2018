@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="/css/main.css">
 </head>
 <body>
-	  <nav>
+  <nav>
     <a id="navTitle" href="/">CodeU Chat App</a>
     <a href="/conversations">Conversations</a>
     <% if(request.getSession().getAttribute("user") != null){ %>
@@ -21,8 +21,19 @@
   <div id="container">
     <div
       style="width:75%; margin-left:auto; margin-right:auto; margin-top: 50px;">
-      <h1>This page is under construction</h1>
-      
+
+      <h1>Administration</h1>
+      <h2>Site Statistics</h2>
+
+	  <p>Here are some site stats:</p>
+      <ul>
+        <li><strong>Users:</strong> placeholder</li>
+        <li><strong>Conversations:</strong> placeholder</li>
+        <li><strong>Messages:</strong> placeholder</li>
+        <li><strong>Most active user:</strong> placeholder</li>
+        <li><strong>Newest User:</strong> placeholder</li>
+        <li><strong>Wordiest User:</strong> placeholder</li>
+      </ul>
     </div>
   </div>
 </body>
