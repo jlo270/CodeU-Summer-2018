@@ -60,7 +60,7 @@ public class MessageStore {
   private List<Message> messages;
   
   /** Access the current amount of messages **/
-  public int getNumMessages() {
+  public static int getNumMessages() {
 	  return messages.size();
   }
 
