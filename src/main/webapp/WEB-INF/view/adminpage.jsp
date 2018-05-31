@@ -1,5 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%
+String userCount = request.getAttribute("userCount").toString();
+String messageCount = request.getAttribute("messageCount").toString();
+String conversationCount = request.getAttribute("conversationCount").toString();
+%>
+    
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -27,9 +33,9 @@
 
 	  <p>Here are some site stats:</p>
       <ul>
-        <li><strong>Users:</strong> placeholder</li>
-        <li><strong>Conversations:</strong> placeholder</li>
-        <li><strong>Messages:</strong> placeholder</li>
+        <li><strong>Users:</strong> <%= userCount %></li>
+        <li><strong>Conversations:</strong> <%= conversationCount %> </li>
+        <li><strong>Messages:</strong> <%= messageCount %></li>
         <li><strong>Most active user:</strong> placeholder</li>
         <li><strong>Newest User:</strong> placeholder</li>
         <li><strong>Wordiest User:</strong> placeholder</li>
