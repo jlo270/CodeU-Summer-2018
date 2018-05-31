@@ -74,9 +74,10 @@
         <li><strong>Hunter James:</strong> Hailing originally from Canada,
           Hunter attends the University of Alabama and enjoys bears, boats
           and Brooklyn 99.</li>
-        <li><strong>Jagdish Ghimire:</strong> Hailing originally from
-          Kathmandu, Nepal, Jagdish is a rising sophomore at Fisk University
-          in Nashville and enjoys music, hiking and memes..</li>
+        <li><strong>Jagdish Ghimire:</strong> Originally from Kathmandu Nepal, Jagdish is 
+        a rising sophomore at Fisk University in Nashville, TN and enjoys listening to music, 
+        hiking and memes.</li>
+       
         <li><strong>Jason Lopez:</strong> Jason attends St Edward's University,
           is from Houston, Texas, and loves rock climbing and running in his
           free time.</li>
