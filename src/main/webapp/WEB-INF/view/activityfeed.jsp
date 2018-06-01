@@ -22,14 +22,16 @@
       <a href="/login">Login</a>
     <% } %>
     <a href="/about.jsp">About</a>
+    <a href="/activityfeed.jsp">Activity Feed</a>
   </nav>
 
   <div id="container">
     <h1>Activity Feed</h1>
-
-    <% if(request.getAttribute("error") != null){ %>
-        <h2 style="color:red"><%= request.getAttribute("error") %></h2>
-    <% } %>
+    <h3>Things are happening all over Charmer Chat!</h3>
+    </br>
+    <div id="activity-block">
+        <h3>Recently...</h3>
+    </div>
   </div>
 </body>
 </html>
