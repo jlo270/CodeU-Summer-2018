@@ -32,7 +32,7 @@ public class UserStore {
 
   /**
    * Returns the singleton instance of UserStore that should be shared between all servlet classes.
-   * Do not call this function from a test; use getTestInstance() instead.
+   * Do not call this function fr om a test; use getTestInstance() instead.
    */
   public static UserStore getInstance() {
     if (instance == null) {
@@ -85,6 +85,21 @@ public class UserStore {
    * @return null if the UUID does not match any existing User.
    */
   public User getUser(UUID id) {
+    for (User user : users) {
+      if (user.getId().equals(id)) {
+        return user;
+      }
+    }
+    return null;
+  }
+
+  /** Find and return User list. */
+  public List<User> getUsers() {
+    return users;
+  }
+
+  /** Find and return the User with the given UUID. */
+  public User getUserWithID(UUID id) {
     for (User user : users) {
       if (user.getId().equals(id)) {
         return user;
