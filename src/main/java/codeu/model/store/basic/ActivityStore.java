@@ -104,7 +104,7 @@ public class ActivityStore {
             }
         });
 
-        List<Activity> sortedActivity = new List<Activity>;
+        List<Activity> sortedActivity = new ArrayList<>();
         for (int i = 0; i < maxElements; ++i) {
             sortedActivity.add(i,activities.get(i));
         }
