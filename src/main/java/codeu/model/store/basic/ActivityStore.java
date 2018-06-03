@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.time.Instant;
+import java.util.UUID;
 
 /**
  * Store class that uses in-memory data structures to hold values and automatically loads from and
@@ -30,6 +31,15 @@ public class ActivityStore {
             instance = new ActivityStore(PersistentStorageAgent.getInstance());
         }
         return instance;
+    }
+
+    /**
+     * Instance getter function used for testing. Supply a mock for PersistentStorageAgent.
+     *
+     * @param persistentStorageAgent a mock used for testing
+     */
+    public static ActivityStore getTestInstance(PersistentStorageAgent persistentStorageAgent) {
+        return new ActivityStore(persistentStorageAgent);
     }
 
     /**
@@ -109,5 +119,20 @@ public class ActivityStore {
             sortedActivity.add(i,activities.get(i));
         }
         return sortedActivity;
+    }
+
+    /** Find and return the Conversation with the given UUID. */
+    Activity getActivityWithId(UUID id) {
+        for (Activity activity : activities) {
+            if (activity.getObjectId().equals(id)) {
+                return activity;
+            }
+        }
+        return null;
+    }
+
+    /** Sets the List of Activities stored by this ActivityStore. */
+    void setActivities(List<Activity> activities) {
+        this.activities = activities;
     }
 }
