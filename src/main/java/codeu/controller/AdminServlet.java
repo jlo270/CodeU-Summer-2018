@@ -1,12 +1,19 @@
 package codeu.controller;
 
 import java.io.IOException;
+import java.time.Instant;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import codeu.model.data.Message;
+import codeu.model.data.User;
 import codeu.model.store.basic.ConversationStore;
 import codeu.model.store.basic.MessageStore;
 import codeu.model.store.basic.UserStore;
@@ -21,7 +28,6 @@ public class AdminServlet extends HttpServlet {
 	/** Store class that gives access to Users. */
 	private UserStore userStore;
 
-	/** Set up state for handling chat requests. */
 	@Override
 	public void init() throws ServletException {
 		super.init();
@@ -55,12 +61,10 @@ public class AdminServlet extends HttpServlet {
 		this.userStore = userStore;
 	}
 
-	/**
-	 * This function fires when a user requests the /admin URL. It forwards the
-	 * request to adminpage.jsp
-	 */
+	
 	@Override
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+		request.setAttribute("newest", userStore.getNewest());
 		request.setAttribute("userCount", userStore.getNumUsers());
 		request.setAttribute("messageCount", messageStore.getNumMessages());
 		request.setAttribute("conversationCount", conversationStore.getNumConversations());

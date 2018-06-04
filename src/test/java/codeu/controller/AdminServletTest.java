@@ -48,7 +48,8 @@ public class AdminServletTest {
 
 	@Test
 	public void testDoGet() throws IOException, ServletException {
-
+		String newest = "test message";
+		Mockito.when(mockUserStore.getNewest()).thenReturn(newest);
 		int userCount = 0;
 		Mockito.when(mockUserStore.getNumUsers()).thenReturn(userCount);
 		int messageCount = 0;
@@ -58,6 +59,7 @@ public class AdminServletTest {
 		
 	    adminServlet.doGet(mockRequest, mockResponse);
 	    
+	    Mockito.verify(mockRequest).setAttribute("newest", newest);
 	    Mockito.verify(mockRequest).setAttribute("userCount", userCount);
 	    Mockito.verify(mockRequest).setAttribute("messageCount", messageCount);
 	    Mockito.verify(mockRequest).setAttribute("conversationCount", conversationCount);

@@ -62,6 +62,19 @@ public class UserStore {
   public int getNumUsers() {
 	  return users.size();
   }
+  
+  public String getNewest() {
+		String retValue = "";
+		if (users.size() != 0) {
+			User temp = users.get(0);
+			for (int i = 0; i < users.size(); i++)
+				if (users.get(i).getCreationTime().compareTo(temp.getCreationTime()) > 0)
+					temp = users.get(i);
+			retValue = temp.getName();
+		}
+		return retValue;
+	}
+
 
   /** This class is a singleton, so its constructor is private. Call getInstance() instead. */
   private UserStore(PersistentStorageAgent persistentStorageAgent) {
