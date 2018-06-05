@@ -6,15 +6,13 @@
   To change this template use File | Settings | File Templates.
 --%>
 
-<%@ page import="java.util.List" %>
 <%@ page import="codeu.model.data.Activity" %>
-<%@ page import="java.time.format.DateTimeFormatter"%>
-<%@ page import="java.time.ZoneId"%>
-<%@ page import="codeu.model.store.basic.ActivityStore" %>
-<%
+<%@ page import="java.util.List" %>
+
+<%--
 Activity activity = (Activity) request.getAttribute("activity");
 List<Activity> sortedActivities = (List<Activity>) request.getAttribute("sortedActivities");
-%>
+--%>
 
 <!DOCTYPE html>
 <html>
@@ -23,7 +21,7 @@ List<Activity> sortedActivities = (List<Activity>) request.getAttribute("sortedA
   <link rel="stylesheet" href="/css/main.css">
 </head>
 <body>
-
+  <%@ include file="activity-helper.jsp" %>
   <nav>
     <a id="navTitle" href="/">CodeU Chat App</a>
     <a href="/conversations">Conversations</a>
@@ -47,19 +45,28 @@ List<Activity> sortedActivities = (List<Activity>) request.getAttribute("sortedA
         <hr/>
 
         <div id="feed">
-          <ul>
-            <%--
-              DateTimeFormatter formatter =
-                  DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
-                                   .withZone( ZoneId.systemDefault() );
-              for (Activity activity : sortedActivities) {
-                String creationTime = formatter.format(ActivityStore.getInstance());
-                  .getObjectId();
-            --%>
-              <li><strong><%--= creationTime --%>creationTime:</strong> Activity details here</li>
-            <%--
-              }
-            --%>
+          <%
+          List<Activity> activities =
+            (List<Activity>) request.getAttribute("activities");
+          if(activities == null || activities.isEmpty()){
+          %>
+            <p>Get involved to see some activity.</p>
+          <%
+          }
+          else {
+          %>
+            <ul class="mdl-list">
+          <%
+              for (Activity activity : activities) {
+            %>
+              <li><strong><%= activity.creationTime %></strong> Activity details here:
+                <%= activity.output%></li>
+            <%
+            }
+            %>
+           <%
+           }
+           %>
           </ul>
         </div>
 

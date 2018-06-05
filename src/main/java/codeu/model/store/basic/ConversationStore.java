@@ -98,7 +98,7 @@ public class ConversationStore {
   }
 
   /** Find and return the Conversation with the given UUID. */
-  public Conversation getConversationWithID(UUID id) {
+  public Conversation getConversationWithId(UUID id) {
     for (Conversation conversation : conversations) {
       if (conversation.getId().equals(id)) {
         return conversation;

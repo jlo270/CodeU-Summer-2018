@@ -86,13 +86,17 @@ public class MessageStore {
   }
 
   /** Find and return the Message with the given UUID. */
-  public Message getMessageWithID(UUID id) {
+  public Message getMessageWithId(UUID id) {
     for (Message message : messages) {
       if (message.getId().equals(id)) {
         return message;
       }
     }
     return null;
+  }
+
+  public List<Message> getAllMessages() {
+    return messages;
   }
 
   /** Sets the List of Messages stored by this MessageStore. */

@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import codeu.model.data.Activity;
 import org.mindrot.jbcrypt.BCrypt;
 
 import codeu.model.data.User;

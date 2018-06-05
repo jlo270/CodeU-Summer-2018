@@ -99,7 +99,7 @@ public class UserStore {
   }
 
   /** Find and return the User with the given UUID. */
-  public User getUserWithID(UUID id) {
+  public User getUserWithId(UUID id) {
     for (User user : users) {
       if (user.getId().equals(id)) {
         return user;
@@ -142,4 +142,3 @@ public class UserStore {
     this.users = users;
   }
 }
-
