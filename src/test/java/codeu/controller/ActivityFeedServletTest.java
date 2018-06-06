@@ -10,6 +10,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import codeu.model.store.basic.UserStore;
 import codeu.model.store.persistence.PersistentDataStoreException;
 import org.junit.Before;
 import org.junit.Test;
@@ -34,12 +35,19 @@ public class ActivityFeedServletTest {
     }
 
     @Test
-    public void testDoGet() throws IOException, ServletException, PersistentDataStoreException {
+    public void testDoGet() throws IOException, ServletException {
         List<Activity> fakeActivityList = new ArrayList<>();
         fakeActivityList.add(new Activity());
 
         activityFeedServlet.doGet(mockRequest, mockResponse);
 
         Mockito.verify(mockRequest).setAttribute("activities", fakeActivityList);
-        Mockito.verify(mockRequestDispatcher).forward(mockRequest, mockResponse);}
+        Mockito.verify(mockRequestDispatcher).forward(mockRequest, mockResponse);
+    }
+
+    /*@Test
+    public void testGetActivities() {
+
+    }*/
 }
+

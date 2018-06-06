@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.LinkedList;
 import java.time.format.DateTimeFormatter;
 import java.time.ZoneId;
+import java.util.Objects;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -149,54 +150,56 @@ public class ActivityFeedServlet extends HttpServlet {
      */
     private List<Activity> getActivities() {
       // iterate through user,message,conversation store
-      List<Activity> activities = null;
-      ConversationStore conversationStore = ConversationStore.getInstance();
+      List<Activity> activities = new LinkedList<>();
       LinkedList<Conversation> conversations = new LinkedList<>(conversationStore.getAllConversations());
-
-      UserStore userStore = UserStore.getInstance();
       LinkedList<User> users = new LinkedList<>(userStore.getUsers());
-
-      MessageStore messageStore = MessageStore.getInstance();
       LinkedList<Message> messages = new LinkedList<>(messageStore.getAllMessages());
 
-
-      while (conversations.peek() != null || users.peek() != null || messages.peek() != null) {
+        while (!conversations.isEmpty() || !users.isEmpty() || !messages.isEmpty()) {
+//      while (conversations.peek() != null || users.peek() != null || messages.peek() != null) {
         // iterate through conversations,users,messages; compare creation times
           Type nextActivity = null;
           //Type.UserJoined;
           Instant nextActivityTime = null;
-          //users.peek().getCreationTime();
+          // users.peek().getCreationTime();
 
-          if ((conversations.peek() != null) &&
-                  ((conversations.peek().getCreationTime().compareTo(nextActivityTime) < 0) ||
-                  nextActivity == null)) {
-              nextActivity = Type.ConversationCreated;
-              assert conversations.peek() != null;
-              nextActivityTime = conversations.peek().getCreationTime();
+          if (conversations.peek() != null) {
+                    nextActivity = Type.ConversationCreated;
+                    nextActivityTime = conversations.peek().getCreationTime();
           }
-          if (users.peek() != null &&
-                  ((users.peek().getCreationTime().compareTo(nextActivityTime) < 0) ||
-                  nextActivity == null)) {
-              nextActivity = Type.UserJoined;
-              nextActivityTime = users.peek().getCreationTime();
+          if (!users.isEmpty()) {
+              if (nextActivityTime == null || nextActivity == null) {
+                  nextActivity = Type.UserJoined;
+                  nextActivityTime = Objects.requireNonNull(users.peek()).getCreationTime();
+              }
+              else if (Objects.requireNonNull(users.peek()).getCreationTime().compareTo(nextActivityTime) < 0) {
+                    nextActivity = Type.UserJoined;
+                    nextActivityTime = Objects.requireNonNull(users.peek()).getCreationTime();
+                }
           }
-          if ((messages.peek() != null) &&
-                  ((messages.peek().getCreationTime().compareTo(nextActivityTime) < 0) ||
-                  nextActivity == null)) {
-              nextActivity = Type.MessageSent;
-              nextActivityTime = messages.peek().getCreationTime();
+          if (!messages.isEmpty()) {
+                if (nextActivityTime == null || nextActivity == null) {
+                    nextActivity = Type.MessageSent;
+                    nextActivityTime = Objects.requireNonNull(messages.peek()).getCreationTime();
+                }
+              if (Objects.requireNonNull(messages.peek()).getCreationTime().compareTo(nextActivityTime) < 0) {
+                      nextActivity = Type.MessageSent;
+                      nextActivityTime = Objects.requireNonNull(messages.peek()).getCreationTime();
+                  }
           }
 
-          switch(nextActivity) {
-              case MessageSent:
-                  activities.add(formatMessage(messages.remove()));
-              case ConversationCreated:
-                  activities.add(formatConversation(conversations.remove()));
-              case UserJoined:
-                  activities.add(formatUser(users.remove()));
-          }
-      }
-      return activities;
+            if (nextActivity != null) {
+                switch(nextActivity) {
+                        case MessageSent:
+                            activities.add(formatMessage(messages.remove()));
+                        case ConversationCreated:
+                            activities.add(formatConversation(conversations.remove()));
+                        case UserJoined:
+                            activities.add(formatUser(users.remove()));
+                }
+            }
+        }
+        return activities;
     }
 
     @Override

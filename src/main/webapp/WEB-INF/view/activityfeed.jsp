@@ -55,12 +55,12 @@ List<Activity> sortedActivities = (List<Activity>) request.getAttribute("sortedA
           }
           else {
           %>
-            <ul class="mdl-list">
+            Printing list<ul class="mdl-list">
           <%
               for (Activity activity : activities) {
             %>
-              <li><strong><%= activity.creationTime %></strong> Activity details here:
-                <%= activity.output%></li>
+              <li><strong><%--= activity.creationTime --%>creation time</strong> Activity details here:
+                <%--= activity.output--%></li>
             <%
             }
             %>
