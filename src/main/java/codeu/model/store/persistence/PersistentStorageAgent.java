@@ -103,5 +103,4 @@ public class PersistentStorageAgent {
   public void writeThrough(Message message) {
     persistentDataStore.writeThrough(message);
   }
-
 }

@@ -32,7 +32,7 @@ public class UserStore {
 
   /**
    * Returns the singleton instance of UserStore that should be shared between all servlet classes.
-   * Do not call this function fr om a test; use getTestInstance() instead.
+   * Do not call this function from a test; use getTestInstance() instead.
    */
   public static UserStore getInstance() {
     if (instance == null) {
@@ -94,7 +94,7 @@ public class UserStore {
   }
 
   /** Find and return User list. */
-  public List<User> getUsers() {
+  public List<User> getAllUsers() {
     return users;
   }
 

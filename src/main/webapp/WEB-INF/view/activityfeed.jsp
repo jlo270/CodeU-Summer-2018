@@ -9,11 +9,6 @@
 <%@ page import="codeu.model.data.Activity" %>
 <%@ page import="java.util.List" %>
 
-<%--
-Activity activity = (Activity) request.getAttribute("activity");
-List<Activity> sortedActivities = (List<Activity>) request.getAttribute("sortedActivities");
---%>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,7 +16,6 @@ List<Activity> sortedActivities = (List<Activity>) request.getAttribute("sortedA
   <link rel="stylesheet" href="/css/main.css">
 </head>
 <body>
-  <%@ include file="activity-helper.jsp" %>
   <nav>
     <a id="navTitle" href="/">CodeU Chat App</a>
     <a href="/conversations">Conversations</a>
@@ -55,7 +49,7 @@ List<Activity> sortedActivities = (List<Activity>) request.getAttribute("sortedA
           }
           else {
           %>
-            Printing list<ul class="mdl-list">
+            <ul class="mdl-list">
           <%
               for (Activity activity : activities) {
             %>

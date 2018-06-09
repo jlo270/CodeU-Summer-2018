@@ -85,16 +85,6 @@ public class MessageStore {
     return messagesInConversation;
   }
 
-  /** Find and return the Message with the given UUID. */
-  public Message getMessageWithId(UUID id) {
-    for (Message message : messages) {
-      if (message.getId().equals(id)) {
-        return message;
-      }
-    }
-    return null;
-  }
-
   public List<Message> getAllMessages() {
     return messages;
   }
