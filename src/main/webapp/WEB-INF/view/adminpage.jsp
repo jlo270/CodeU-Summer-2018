@@ -5,6 +5,7 @@ String userCount = request.getAttribute("userCount").toString();
 String messageCount = request.getAttribute("messageCount").toString();
 String conversationCount = request.getAttribute("conversationCount").toString();
 String newest = request.getAttribute("newest").toString();
+String wordiest = request.getAttribute("wordiest").toString();
 %>
     
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -37,9 +38,9 @@ String newest = request.getAttribute("newest").toString();
         <li><strong>Users:</strong> <%= userCount %></li>
         <li><strong>Conversations:</strong> <%= conversationCount %> </li>
         <li><strong>Messages:</strong> <%= messageCount %></li>
-        <li><strong>Most active user:</strong> placeholder</li>
+     <%--  <li><strong>Most active user:</strong> placeholder</li> 
         <li><strong>Newest User:</strong> <%= newest %></li>
-        <li><strong>Wordiest User:</strong> placeholder</li>
+        <li><strong>Wordiest User:</strong> <%= wordiest %></li> --%>
       </ul>
     </div>
   </div>
