@@ -1,7 +1,5 @@
 package codeu.controller;
 
-import static org.junit.Assert.*;
-
 import java.io.IOException;
 
 import javax.servlet.RequestDispatcher;
