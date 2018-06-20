@@ -1,5 +1,6 @@
 package codeu.controller;
 
+import codeu.model.data.Activity;
 import codeu.model.data.Message;
 import codeu.model.data.Conversation;
 import codeu.model.data.User;
@@ -14,40 +15,10 @@ import java.util.List;
 import java.util.LinkedList;
 import java.time.format.DateTimeFormatter;
 import java.time.ZoneId;
-import java.util.Objects;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-/**
- * Class representing an activity, which can be thought of as any action
- * within the chat room. Activities are triggered by a User joining a
- * conversation, starting a conversation or replying to a message.
- */
-class Activity {
-  private final String creationTime;
-  private final String output;
-
-  /**
-   * Constructs a new Activity.
-   *
-   * @param creationTime the creation time of this Activity as a String
-   * @param output the formatted description of the Activity as a String
-   */
-  public Activity(String creationTime, String output) {
-    this.creationTime = creationTime;
-    this.output = output;
-  }
-
-  /** Returns the creation time of this Activity. */
-  public String getCreationTime() { return creationTime; }
-
-  /** Returns the title of this Conversation. */
-  public String getOutput() {
-    return output;
-  }
-}
 
 public class ActivityFeedServlet extends HttpServlet {
 
@@ -117,7 +88,7 @@ public class ActivityFeedServlet extends HttpServlet {
    */
   private Activity formatUser(User user) {
     String creationTime = formatTime(user.getCreationTime());
-    String output = user.getName() + "joined Charmer Chat.";
+    String output = user.getName() + " joined Charmer Chat.";
     return new Activity(creationTime,output);
   }
   /**
@@ -136,6 +107,9 @@ public class ActivityFeedServlet extends HttpServlet {
     User author = userStore.getUserWithId(message.getAuthorId());
     Conversation conversation = conversationStore.getConversationWithId(message.getConversationId());
     String creationTime = formatTime(message.getCreationTime());
+    System.out.println(author);
+    System.out.println(conversation);
+    System.out.println(message);
     String output = author.getName() + " sent in " + conversation.getTitle() + ": " + message.getContent();
     return new Activity(creationTime,output);
   }
@@ -143,11 +117,23 @@ public class ActivityFeedServlet extends HttpServlet {
   /**
    * Gets all activity on app, iterates through to sort by timestamp and prepares printed statements.
    */
-  private List<Activity> getActivities() {
+  List<Activity> getActivities() {
     List<Activity> activities = new LinkedList<>();
     LinkedList<Conversation> conversations = new LinkedList<>(conversationStore.getAllConversations());
+    System.out.println(conversationStore);
     LinkedList<User> users = new LinkedList<>(userStore.getAllUsers());
     LinkedList<Message> messages = new LinkedList<>(messageStore.getAllMessages());
+
+    System.out.print("\n");
+    System.out.print("Length of conversations: ");
+    System.out.print(conversations.size());
+    System.out.print("\n");
+    System.out.print("Length of messages: ");
+    System.out.print(messages.size());
+    System.out.print("\n");
+    System.out.print("Length of users: ");
+    System.out.print(users.size());
+    System.out.print("\n");
 
     while (!conversations.isEmpty() || !users.isEmpty() || !messages.isEmpty()) {
       // Iterates through all new conversations, users and messages in the lists, compares the creation times of
@@ -160,23 +146,23 @@ public class ActivityFeedServlet extends HttpServlet {
         nextActivityTime = conversations.peek().getCreationTime();
       }
       if (!users.isEmpty()) {
-        if (nextActivityTime == null || nextActivity == null) {
+        if (nextActivityTime == null) {
           nextActivity = ActivityType.UserJoined;
           nextActivityTime = users.peek().getCreationTime();
         }
-        else if (Objects.requireNonNull(users.peek()).getCreationTime().compareTo(nextActivityTime) < 0) {
+        else if (users.peek().getCreationTime().compareTo(nextActivityTime) < 0) {
           nextActivity = ActivityType.UserJoined;
-          nextActivityTime = Objects.requireNonNull(users.peek()).getCreationTime();
+          nextActivityTime = users.peek().getCreationTime();
         }
       }
       if (!messages.isEmpty()) {
-        if (nextActivityTime == null || nextActivity == null) {
+        if (nextActivityTime == null) {
           nextActivity = ActivityType.MessageSent;
-          nextActivityTime = Objects.requireNonNull(messages.peek()).getCreationTime();
+          nextActivityTime = messages.peek().getCreationTime();
         }
-        if (Objects.requireNonNull(messages.peek()).getCreationTime().compareTo(nextActivityTime) < 0) {
+        if (messages.peek().getCreationTime().compareTo(nextActivityTime) < 0) {
           nextActivity = ActivityType.MessageSent;
-          nextActivityTime = Objects.requireNonNull(messages.peek()).getCreationTime();
+          nextActivityTime = messages.peek().getCreationTime();
         }
       }
 
@@ -184,10 +170,13 @@ public class ActivityFeedServlet extends HttpServlet {
         switch(nextActivity) {
           case MessageSent:
             activities.add(formatMessage(messages.remove()));
+            break;
           case ConversationCreated:
             activities.add(formatConversation(conversations.remove()));
+            break;
           case UserJoined:
             activities.add(formatUser(users.remove()));
+            break;
         }
       }
     }
@@ -198,8 +187,9 @@ public class ActivityFeedServlet extends HttpServlet {
   public void doGet(HttpServletRequest request, HttpServletResponse response)
       throws IOException, ServletException {
     List<Activity> activities = getActivities();
+    System.out.print(activities);
     request.setAttribute("activities", activities);
-    request.getRequestDispatcher("/WEB-INF/view/activityfeed.jsp").forward(request, response);;
+    request.getRequestDispatcher("/WEB-INF/view/activityfeed.jsp").forward(request, response);
 
   }
 

@@ -53,8 +53,8 @@
           <%
               for (Activity activity : activities) {
             %>
-              <li><strong><%--= activity.creationTime --%>creation time</strong> Activity details here:
-                <%--= activity.output--%></li>
+              <li><strong><%= activity.getCreationTime()%></strong>:
+                <%= activity.getOutput()%></li>
             <%
             }
             %>
