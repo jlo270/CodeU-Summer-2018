@@ -37,7 +37,7 @@ public class ActivityTest {
     Activity otherActivity = new Activity("1969-12-31 18:01:00","other_username joined Charmer Chat.");
 
     Assert.assertEquals(activity, new Activity("1969-12-31 18:00:02","test_username joined Charmer Chat."));
-    Assert.assertNotEquals(otherActivity,activity.toString());
+    Assert.assertNotEquals(otherActivity,activity);
   }
 
 }
