@@ -94,16 +94,12 @@ public class ActivityFeedServletTest {
   @Test
   public void testDoGetNothing() throws IOException, ServletException {
     List<Activity> noActivities = new ArrayList<>();
-//    activities.add(new Activity(output,creationTime));
-//    Activity mockActivity = new Activity(output,creationTime);
 
     activityFeedServlet.doGet(mockRequest, mockResponse);
 
     Mockito.verify(mockRequest).setAttribute("activities", noActivities);
     Mockito.verify(mockRequestDispatcher).forward(mockRequest, mockResponse);
   }
-
-
 
   @Test
   public void testDoGetOneOfEach() throws IOException, ServletException {
@@ -135,25 +131,43 @@ public class ActivityFeedServletTest {
     Mockito.verify(mockRequest).setAttribute("activities", allActivities);
   }
 
-/*
   @Test
-  public void testUsersReceived() {
+  public void testDoGetUserOnly() throws IOException, ServletException {
     final List<User> userList = new ArrayList<>();
     userList.add(USER_ONE);
-    userList.add(USER_TWO);
     mockUserStore.setUsers(userList);
+    activityFeedServlet.setUserStore(mockUserStore);
 
-    Assert.assertEquals(userList,mockUserStore.getAllUsers());
+    List<Activity> allActivities = new LinkedList<>();
+    String creationTimeTwo = "1969-12-31 18:00:02";
+    String userOneContent = "test_username_one joined Charmer Chat.";
+    allActivities.add(new Activity(creationTimeTwo, userOneContent));
+
+    activityFeedServlet.doGet(mockRequest, mockResponse);
+    Mockito.verify(mockRequest).setAttribute("activities", allActivities);
   }
 
   @Test
-  public void testConversationReceived() {
+  public void testDoGetUserAndConversationOnly() throws IOException, ServletException {
+    final List<User> userList = new ArrayList<>();
+    userList.add(USER_ONE);
+    mockUserStore.setUsers(userList);
     final List<Conversation> conversationList = new ArrayList<>();
     conversationList.add(CONVERSATION_ONE);
-    conversationList.add(CONVERSATION_TWO);
     mockConversationStore.setConversations(conversationList);
+    activityFeedServlet.setConversationStore(mockConversationStore);
+    activityFeedServlet.setUserStore(mockUserStore);
 
-    Assert.assertEquals(conversationList,mockConversationStore.getAllConversations());
-  }*/
+    List<Activity> allActivities = new LinkedList<>();
+    String creationTimeTwo = "1969-12-31 18:00:02";
+    String creationTimeThree = "1969-12-31 18:00:03";
+    String userOneContent = "test_username_one joined Charmer Chat.";
+    allActivities.add(new Activity(creationTimeTwo, userOneContent));
+    String conversationOneContent = "test_username_one started conversation conversation_one";
+    allActivities.add(new Activity(creationTimeThree, conversationOneContent));
+
+    activityFeedServlet.doGet(mockRequest, mockResponse);
+    Mockito.verify(mockRequest).setAttribute("activities", allActivities);
+  }
 }
 
