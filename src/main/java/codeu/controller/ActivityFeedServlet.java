@@ -80,7 +80,8 @@ public class ActivityFeedServlet extends HttpServlet {
   private String formatTime(Instant creationTime) {
     DateTimeFormatter formatter =
         DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
-            .withZone( ZoneId.of("America/Chicago"));
+            .withZone( ZoneId.systemDefault() );
+    //ZoneId.of("America/Chicago")
     return formatter.format(creationTime);
   }
   /**

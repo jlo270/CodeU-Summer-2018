@@ -2,10 +2,8 @@ package codeu.controller;
 
 import java.io.IOException;
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.UUID;
+import java.time.ZoneId;
+import java.util.*;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -19,6 +17,7 @@ import codeu.model.store.basic.MessageStore;
 import codeu.model.store.basic.ConversationStore;
 import codeu.model.store.basic.UserStore;
 import codeu.model.store.persistence.PersistentStorageAgent;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -36,6 +35,7 @@ public class ActivityFeedServletTest {
   private MessageStore mockMessageStore;
   private ConversationStore mockConversationStore;
   private UserStore mockUserStore;
+  private TimeZone chicagoTimeZone = TimeZone.getTimeZone("America/Chicago");
 
   private final UUID CONVERSATION_ID_ONE = UUID.randomUUID();
   private final UUID USER_ID_ONE = UUID.randomUUID();
@@ -47,6 +47,7 @@ public class ActivityFeedServletTest {
           USER_ID_ONE,
           "message one",
           Instant.ofEpochMilli(1000));
+          //Instant.parse("1969-12-31T18:00:01Z"));
   private final Message MESSAGE_TWO =
       new Message(
           UUID.randomUUID(),
@@ -54,18 +55,21 @@ public class ActivityFeedServletTest {
           USER_ID_TWO,
           "message two",
           Instant.ofEpochMilli(4000));
+          //Instant.parse("1969-12-31T18:00:04Z"));
   private final User USER_ONE =
       new User(
           USER_ID_ONE,
           "test_username_one",
           "$2a$10$/zf4WlT2Z6tB5sULB9Wec.QQdawmF0f1SbqBw5EeJg5uoVpKFFXAa",
           Instant.ofEpochMilli(2000));
+          //Instant.parse("1969-12-31T18:00:02Z"));
   private final User USER_TWO =
       new User(
           USER_ID_TWO,
           "test_username_two",
           "$2a$10$lgZSbmcYyyC7bETcMo/O1uUltWYDK3DW1lrEjCumOE1u8QPMlzNVy",
           Instant.ofEpochMilli(5000));
+          //Instant.parse("1969-12-31T18:00:05Z"));
   private final Conversation CONVERSATION_ONE =
       new Conversation(
           CONVERSATION_ID_ONE, USER_ID_ONE, "conversation_one", Instant.ofEpochMilli(3000));
@@ -89,6 +93,8 @@ public class ActivityFeedServletTest {
 
     mockUserStore = UserStore.getTestInstance(mockPersistentStorageAgent);
     activityFeedServlet.setUserStore(mockUserStore);
+
+    TimeZone.setDefault(chicagoTimeZone);
   }
 
   @Test
@@ -169,5 +175,11 @@ public class ActivityFeedServletTest {
     activityFeedServlet.doGet(mockRequest, mockResponse);
     Mockito.verify(mockRequest).setAttribute("activities", allActivities);
   }
+
+  /*@After
+  public void teardown() {
+    TimeZone.setDefault(ZoneId.systemDefault());
+  }*/
+
 }
 
