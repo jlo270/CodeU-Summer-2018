@@ -74,6 +74,12 @@ public class UserStoreTest {
 
     Assert.assertNull(resultUser);
   }
+  
+  @Test
+  public void testgetNumUsers() {
+	  int numUsers = userStore.getNumUsers();
+	  Assert.assertEquals(3, numUsers);
+  }
 
   @Test
   public void testAddUser() {
@@ -100,6 +106,7 @@ public class UserStoreTest {
   public void testIsUserRegistered_false() {
     Assert.assertFalse(userStore.isUserRegistered("fake username"));
   }
+  
 
   private void assertEquals(User expectedUser, User actualUser) {
     Assert.assertEquals(expectedUser.getId(), actualUser.getId());
