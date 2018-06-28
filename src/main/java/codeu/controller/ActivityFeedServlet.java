@@ -22,7 +22,9 @@ import javax.servlet.http.HttpServletResponse;
 
 public class ActivityFeedServlet extends HttpServlet {
 
-  /** Enumerated type to define whether an activity is a Message, User, or Conversation. */
+  /** Activities can take three forms; this defines the options we might select from queues
+   * when creating a comprehensive timeline of activities.
+   * */
   private enum ActivityType {
     UserJoined,
     ConversationCreated,
@@ -75,43 +77,39 @@ public class ActivityFeedServlet extends HttpServlet {
   }
 
   /**
-   * Formats creation time into String.
+   * Formats creation time into a string.
    */
   private String formatTime(Instant creationTime) {
     DateTimeFormatter formatter =
         DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
             .withZone( ZoneId.systemDefault() );
-    //ZoneId.of("America/Chicago")
     return formatter.format(creationTime);
   }
   /**
-   * Formats User data into readable string.
+   * Formats User data into an Activity.
    */
   private Activity formatUser(User user) {
-    String creationTime = formatTime(user.getCreationTime());
-    String output = user.getName() + " joined Charmer Chat.";
+    final String creationTime = formatTime(user.getCreationTime());
+    final String output = user.getName() + " joined Charmer Chat.";
     return new Activity(creationTime,output);
   }
   /**
-   * Formats Conversation data into readable string.
+   * Formats Conversation data into an Activity.
    */
   private Activity formatConversation(Conversation conversation) {
     User owner = userStore.getUserWithId(conversation.getOwnerId());
-    String creationTime = formatTime(conversation.getCreationTime());
-    String output = owner.getName() + " started conversation " + conversation.getTitle();
+    final String creationTime = formatTime(conversation.getCreationTime());
+    final String output = owner.getName() + " started conversation " + conversation.getTitle();
     return new Activity(creationTime,output);
   }
   /**
-   * Formats Message data into readable string.
+   * Formats Message data into an Activity.
    */
   private Activity formatMessage(Message message) {
     User author = userStore.getUserWithId(message.getAuthorId());
     Conversation conversation = conversationStore.getConversationWithId(message.getConversationId());
-    String creationTime = formatTime(message.getCreationTime());
-    System.out.println(author);
-    System.out.println(conversation);
-    System.out.println(message);
-    String output = author.getName() + " sent in " + conversation.getTitle() + ": " + message.getContent();
+    final String creationTime = formatTime(message.getCreationTime());
+    final String output = author.getName() + " sent in " + conversation.getTitle() + ": " + message.getContent();
     return new Activity(creationTime,output);
   }
 
@@ -121,24 +119,12 @@ public class ActivityFeedServlet extends HttpServlet {
   List<Activity> getActivities() {
     List<Activity> activities = new LinkedList<>();
     LinkedList<Conversation> conversations = new LinkedList<>(conversationStore.getAllConversations());
-    System.out.println(conversationStore);
     LinkedList<User> users = new LinkedList<>(userStore.getAllUsers());
     LinkedList<Message> messages = new LinkedList<>(messageStore.getAllMessages());
 
-    System.out.print("\n");
-    System.out.print("Length of conversations: ");
-    System.out.print(conversations.size());
-    System.out.print("\n");
-    System.out.print("Length of messages: ");
-    System.out.print(messages.size());
-    System.out.print("\n");
-    System.out.print("Length of users: ");
-    System.out.print(users.size());
-    System.out.print("\n");
-
+    // Iterates through all new conversations, users and messages in the lists, compares the creation times of
+    //  each then inserts objects chronologically into list of activities.
     while (!conversations.isEmpty() || !users.isEmpty() || !messages.isEmpty()) {
-      // Iterates through all new conversations, users and messages in the lists, compares the creation times of
-      //  each then inserts objects chronologically into list of activities.
       ActivityType nextActivity = null;
       Instant nextActivityTime = null;
 
@@ -188,16 +174,7 @@ public class ActivityFeedServlet extends HttpServlet {
   public void doGet(HttpServletRequest request, HttpServletResponse response)
       throws IOException, ServletException {
     List<Activity> activities = getActivities();
-    System.out.print(activities);
     request.setAttribute("activities", activities);
     request.getRequestDispatcher("/WEB-INF/view/activityfeed.jsp").forward(request, response);
-
-  }
-
-  @Override
-  public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    System.out.print("in post request");
-    response.getOutputStream().println("in post request");
-    //response.sendRedirect("/activity");
   }
 }

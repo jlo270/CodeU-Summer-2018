@@ -3,7 +3,8 @@ package codeu.model.data;
 /**
  * Class representing an activity, which can be thought of as any action
  * within the chat room. Activities are triggered by a User joining a
- * conversation, starting a conversation or replying to a message.
+ * conversation, starting a conversation or replying to a message. Activity
+ * data is stored in the form of human-readable strings.
  */
 public class Activity {
   private final String creationTime;

@@ -29,7 +29,6 @@ public class ActivityFeedServletTest {
   private HttpServletRequest mockRequest;
   private HttpServletResponse mockResponse;
   private RequestDispatcher mockRequestDispatcher;
-  private PersistentStorageAgent mockPersistentStorageAgent;
   private final String creationTime = "test time";
   private final String output = "test output";
   private MessageStore mockMessageStore;
@@ -83,7 +82,7 @@ public class ActivityFeedServletTest {
     Mockito.when(mockRequest.getRequestDispatcher("/WEB-INF/view/activityfeed.jsp"))
         .thenReturn(mockRequestDispatcher);
 
-    mockPersistentStorageAgent = Mockito.mock(PersistentStorageAgent.class);
+    PersistentStorageAgent mockPersistentStorageAgent = Mockito.mock(PersistentStorageAgent.class);
 
     mockConversationStore = ConversationStore.getTestInstance(mockPersistentStorageAgent);
     activityFeedServlet.setConversationStore(mockConversationStore);
@@ -176,10 +175,10 @@ public class ActivityFeedServletTest {
     Mockito.verify(mockRequest).setAttribute("activities", allActivities);
   }
 
-  /*@After
+  @After
   public void teardown() {
-    TimeZone.setDefault(ZoneId.systemDefault());
-  }*/
+    TimeZone.setDefault(TimeZone.getDefault());
+  }
 
 }
 

@@ -33,7 +33,7 @@
 
     <div id="container">
 
-        <h3>Recent Activity (all times in CDT):
+        <h3>Recent Activity:
           <a href="" style="float: right">Refresh</a></h3>
 
         <hr/>
