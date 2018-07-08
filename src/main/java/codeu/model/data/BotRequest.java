@@ -16,7 +16,7 @@ public class BotRequest {
    */
   public BotRequest(String command, BotArguments arguments, UUID conversationId) {
     this.command = command;
-    this.BotArguments = arguments;
+    this.arguments = arguments;
     this.conversationId = conversationId;
   }
 
