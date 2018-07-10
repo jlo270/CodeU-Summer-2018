@@ -6,7 +6,7 @@ import codeu.model.data.RoutingEngine;
 import java.util.regex.*;
 
 
-public class ParsingEngine {
+public class parsingEngine {
  	public void ParseCommands(String message){
  		BotRequest request;
 
