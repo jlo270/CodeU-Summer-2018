@@ -75,7 +75,7 @@ public class User {
 	  return isAdmin;
   }
   
-  /** Makes the user and Admin */
+  /** Makes the user an Admin */
   public void makeAdmin() {
 	  isAdmin = true;
   }
