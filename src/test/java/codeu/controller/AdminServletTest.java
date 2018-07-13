@@ -8,6 +8,7 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.junit.Before;
 import org.mockito.Mockito;
@@ -34,6 +35,7 @@ public class AdminServletTest {
 	private MessageStore mockMessageStore;
 	private UserStore mockUserStore;
 	private PersistentStorageAgent mockPersistentStorageAgent;
+	private User user;
 
 
 	@Before
@@ -54,17 +56,20 @@ public class AdminServletTest {
 		mockUserStore = UserStore.getTestInstance(mockPersistentStorageAgent);
 		adminServlet.setUserStore(mockUserStore);
 		
-		User USER_ONE =
-		      new User(
-	              UUID.randomUUID(),
-	              "test_username_one",
-	              "$2a$10$/zf4WlT2Z6tB5sULB9Wec.QQdawmF0f1SbqBw5EeJg5uoVpKFFXAa",
-	              Instant.ofEpochMilli(1000));
-		mockUserStore.addUser(USER_ONE);
+		User user =
+	        new User(
+	            UUID.randomUUID(),
+	            "test username",
+	            "$2a$10$.e.4EEfngEXmxAO085XnYOmDntkqod0C384jOR9oagwxMnPNHaGLa",
+	            Instant.now());
+		mockUserStore.addUser(user);
 	}
 
-	@Test
+	
 	public void testDoGet() throws IOException, ServletException {
+	    HttpSession mockSession = Mockito.mock(HttpSession.class);
+	    Mockito.when(mockRequest.getSession()).thenReturn(mockSession);
+	    Mockito.when(mockSession.getAttribute("user")).thenReturn("test username");
 		
 		int userCount = mockUserStore.getNumUsers();
 		int messageCount = mockMessageStore.getNumMessages();
@@ -72,6 +77,7 @@ public class AdminServletTest {
 		String newestUser = mockUserStore.getNewest().getName();
 		
 	    adminServlet.doGet(mockRequest, mockResponse);
+	    
 	    
 	    Mockito.verify(mockRequest).setAttribute("newestUser", newestUser);
 	    Mockito.verify(mockRequest).setAttribute("userCount", userCount);

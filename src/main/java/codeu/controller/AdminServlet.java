@@ -29,6 +29,8 @@ public class AdminServlet extends HttpServlet {
 		setConversationStore(ConversationStore.getInstance());
 		setMessageStore(MessageStore.getInstance());
 		setUserStore(UserStore.getInstance());
+		if(userStore.getUser("admin") != null)
+			userStore.getUser("admin").makeAdmin();
 	}
 
 	/**
@@ -62,6 +64,20 @@ public class AdminServlet extends HttpServlet {
 	 */
 	@Override
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+		String username =  (String) request.getSession().getAttribute("user");
+		User user = userStore.getUser(username);
+		if(userStore.getNumUsers() != 0 ) { //checks if no users exist first
+			if(user == null) { //if not logged in, redirect
+				response.sendRedirect("/notanadmin.jsp");
+				return;
+			}
+			Boolean isAdmin = user.getAdmin();
+			if (!isAdmin) {
+				//current user is not admin, redirect to another page
+				response.sendRedirect("/notanadmin.jsp");
+				return;
+			}
+		}
 		request.setAttribute("newestUser", userStore.getNewest().getName());
 		request.setAttribute("userCount", userStore.getNumUsers());
 		request.setAttribute("messageCount", messageStore.getNumMessages());
