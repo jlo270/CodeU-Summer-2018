@@ -82,6 +82,6 @@ public class User {
   
   /** Demotes the user from Admin status */
   public void removeAdmin() {
-	  isAdmin = true;
+	  isAdmin = false;
   }
 }
