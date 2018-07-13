@@ -12,6 +12,7 @@ import codeu.model.store.basic.ConversationStore;
 import codeu.model.store.basic.MessageStore;
 import codeu.model.store.basic.UserStore;
 
+/** Servlet class responsible for the admin page */
 public class AdminServlet extends HttpServlet {
 	/** Store class that gives access to Conversations. */
 	private ConversationStore conversationStore;
@@ -61,8 +62,6 @@ public class AdminServlet extends HttpServlet {
 	 */
 	@Override
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-		//request.setAttribute("wordiest", userStore.getUser(messageStore.getWordiest()).getName());
-		//request.setAttribute("newest", userStore.getNewest());
 		request.setAttribute("userCount", userStore.getNumUsers());
 		request.setAttribute("messageCount", messageStore.getNumMessages());
 		request.setAttribute("conversationCount", conversationStore.getNumConversations());
