@@ -23,6 +23,7 @@ public class User {
   private final String name;
   private final String passwordHash;
   private final Instant creation;
+  private Boolean isAdmin;
 
   /**
    * Constructs a new User.
@@ -37,6 +38,7 @@ public class User {
     this.name = name;
     this.passwordHash = passwordHash;
     this.creation = creation;
+    this.isAdmin = false;
   }
 
   /** Returns the ID of this User. */
@@ -57,5 +59,20 @@ public class User {
   /** Returns the creation time of this User. */
   public Instant getCreationTime() {
     return creation;
+  }
+  
+  /** Returns if the User is an admin. */
+  public Boolean getAdmin() {
+	  return isAdmin;
+  }
+  
+  /** Makes the user and Admin */
+  public void makeAdmin() {
+	  isAdmin = true;
+  }
+  
+  /** Demotes the user from Admin status */
+  public void removeAdmin() {
+	  isAdmin = true;
   }
 }

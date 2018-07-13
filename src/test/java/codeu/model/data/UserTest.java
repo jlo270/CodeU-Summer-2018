@@ -34,5 +34,10 @@ public class UserTest {
     Assert.assertEquals(name, user.getName());
     Assert.assertEquals(passwordHash, user.getPasswordHash());
     Assert.assertEquals(creation, user.getCreationTime());
+    Assert.assertEquals(false, user.getAdmin());
+    user.makeAdmin();
+    Assert.assertEquals(true, user.getAdmin());
+    user.removeAdmin();
+    Assert.assertEquals(false, user.getAdmin());
   }
 }
