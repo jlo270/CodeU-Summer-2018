@@ -85,6 +85,24 @@ public class UserStore {
   }
 
   /**
+   * Access the name of the User that was most recently created
+   * 
+   * @returns null if no users exist
+   */
+  public User getNewest() {
+	User retValue = null;
+	if (users.size() != 0) {
+		User newest = users.get(0);
+		for (int i = 0; i < users.size(); i++)
+			if (users.get(i).getCreationTime().compareTo(newest.getCreationTime()) > 0)
+				newest = users.get(i);
+		retValue = newest;
+	}
+	return retValue;
+  }
+  
+  
+  /**
    * Access the User object with the given UUID.
    *
    * @return null if the UUID does not match any existing User.

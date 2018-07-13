@@ -53,6 +53,14 @@ public class AdminServletTest {
 
 		mockUserStore = UserStore.getTestInstance(mockPersistentStorageAgent);
 		adminServlet.setUserStore(mockUserStore);
+		
+		User USER_ONE =
+		      new User(
+	              UUID.randomUUID(),
+	              "test_username_one",
+	              "$2a$10$/zf4WlT2Z6tB5sULB9Wec.QQdawmF0f1SbqBw5EeJg5uoVpKFFXAa",
+	              Instant.ofEpochMilli(1000));
+		mockUserStore.addUser(USER_ONE);
 	}
 
 	@Test
@@ -61,9 +69,11 @@ public class AdminServletTest {
 		int userCount = mockUserStore.getNumUsers();
 		int messageCount = mockMessageStore.getNumMessages();
 		int conversationCount = mockConversationStore.getNumConversations();
+		String newestUser = mockUserStore.getNewest().getName();
 		
 	    adminServlet.doGet(mockRequest, mockResponse);
 	    
+	    Mockito.verify(mockRequest).setAttribute("newestUser", newestUser);
 	    Mockito.verify(mockRequest).setAttribute("userCount", userCount);
 	    Mockito.verify(mockRequest).setAttribute("messageCount", messageCount);
 	    Mockito.verify(mockRequest).setAttribute("conversationCount", conversationCount);

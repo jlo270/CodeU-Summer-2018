@@ -34,6 +34,13 @@ public class UserStoreTest {
           "test_username_three",
           "$2a$10$htXz4E48iPprTexGsEeBFurXyCwW6F6aoiSBqotL4m0NBg/VSkB9.",
           Instant.ofEpochMilli(3000));
+  private final User USER_FOUR =
+	  new User(
+		  UUID.randomUUID(),
+		  "test_username_four",
+		  "$2a$10$/zf4WlT2Z6tB5sULB9Wec.QQdawmF0f1SbqBw5EeJg5uoVpK/FFXAa",
+		  Instant.now());
+		  
 
   @Before
   public void setup() {
@@ -47,6 +54,15 @@ public class UserStoreTest {
     userStore.setUsers(userList);
   }
 
+  @Test
+  public void testNewestUser() {
+	  User newestUser = userStore.getNewest();
+	  assertEquals(USER_THREE, newestUser);
+	  userStore.addUser(USER_FOUR);
+	  newestUser = userStore.getNewest();
+	  assertEquals(USER_FOUR, newestUser);
+	  
+  }
   @Test
   public void testGetUser_byUsername_found() {
     User resultUser = userStore.getUser(USER_ONE.getName());

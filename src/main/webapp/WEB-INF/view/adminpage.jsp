@@ -4,6 +4,7 @@
 String userCount = request.getAttribute("userCount").toString();
 String messageCount = request.getAttribute("messageCount").toString();
 String conversationCount = request.getAttribute("conversationCount").toString();
+String newestUser = request.getAttribute("newestUser").toString();
 %>
     
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -36,6 +37,7 @@ String conversationCount = request.getAttribute("conversationCount").toString();
         <li><strong>Users:</strong> <%= userCount %></li>
         <li><strong>Conversations:</strong> <%= conversationCount %> </li>
         <li><strong>Messages:</strong> <%= messageCount %></li>
+        <li><strong>Newest User:</strong> <%= newestUser %></li>
       </ul>
     </div>
   </div>
