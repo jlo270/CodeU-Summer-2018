@@ -57,30 +57,13 @@ public class AdminServletTest {
 
 	@Test
 	public void testDoGet() throws IOException, ServletException {
-		User fakeUser1 = new User(UUID.randomUUID(), "test_name1", "test_pass1", Instant.now());
-		User fakeUser2 = new User(UUID.randomUUID(), "test_name2", "test_pass2", Instant.now());
-		mockUserStore.addUser(fakeUser1);
-		mockUserStore.addUser(fakeUser2);
-		Conversation fakeConversation1 = new Conversation(UUID.randomUUID(), fakeUser1.getId(), "test_conversation1", Instant.now());
-		Conversation fakeConversation2 = new Conversation(UUID.randomUUID(), fakeUser2.getId(), "test conversation2", Instant.now());
-		mockConversationStore.addConversation(fakeConversation1);
-		mockConversationStore.addConversation(fakeConversation2);
-		Message fakeMessage1 = new Message(UUID.randomUUID(), fakeConversation1.getId(), fakeUser1.getId(), "test_content", Instant.now());
-		Message fakeMessage2 = new Message(UUID.randomUUID(), fakeConversation2.getId(), fakeUser2.getId(), "test_content_two", Instant.now());
-		mockMessageStore.addMessage(fakeMessage1);
-		mockMessageStore.addMessage(fakeMessage2);
 		
 		int userCount = mockUserStore.getNumUsers();
-		Assert.assertEquals(2, userCount);
 		int messageCount = mockMessageStore.getNumMessages();
-		Assert.assertEquals(2, messageCount);
 		int conversationCount = mockConversationStore.getNumConversations();
-		Assert.assertEquals(2, conversationCount);
 		
 	    adminServlet.doGet(mockRequest, mockResponse);
 	    
-	   // Mockito.verify(mockRequest).setAttribute("wordiest", wordiest);
-	   //Mockito.verify(mockRequest).setAttribute("newest", newest);
 	    Mockito.verify(mockRequest).setAttribute("userCount", userCount);
 	    Mockito.verify(mockRequest).setAttribute("messageCount", messageCount);
 	    Mockito.verify(mockRequest).setAttribute("conversationCount", conversationCount);
