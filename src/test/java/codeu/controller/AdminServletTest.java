@@ -8,6 +8,7 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.junit.Before;
 import org.mockito.Mockito;
@@ -34,11 +35,12 @@ public class AdminServletTest {
 	private MessageStore mockMessageStore;
 	private UserStore mockUserStore;
 	private PersistentStorageAgent mockPersistentStorageAgent;
+	private User user;
 
 
 	@Before
 	public void setup() {
-		adminServlet = new AdminServlet();
+	    adminServlet = new AdminServlet();
 		mockRequest = Mockito.mock(HttpServletRequest.class);
 		mockResponse = Mockito.mock(HttpServletResponse.class);
 		mockRequestDispatcher = Mockito.mock(RequestDispatcher.class);
@@ -48,26 +50,81 @@ public class AdminServletTest {
 		mockConversationStore = ConversationStore.getTestInstance(mockPersistentStorageAgent);
 		adminServlet.setConversationStore(mockConversationStore);
 
-		mockMessageStore = MessageStore.getTestInstance(mockPersistentStorageAgent);
-		adminServlet.setMessageStore(mockMessageStore);
+	    mockMessageStore = MessageStore.getTestInstance(mockPersistentStorageAgent);
+	    adminServlet.setMessageStore(mockMessageStore);
 
 		mockUserStore = UserStore.getTestInstance(mockPersistentStorageAgent);
 		adminServlet.setUserStore(mockUserStore);
+		
 	}
 
 	@Test
-	public void testDoGet() throws IOException, ServletException {
-		
-		int userCount = mockUserStore.getNumUsers();
-		int messageCount = mockMessageStore.getNumMessages();
-		int conversationCount = mockConversationStore.getNumConversations();
+	public void testDoGetUsers() throws IOException, ServletException {
+		User USER_ONE =
+		    new User(
+		        UUID.randomUUID(),
+                "username one",
+	            "$2a$10$.e.4EEfngEXmxAO085XnYOmDntkqod0C384jOR9oagwxMnPNHaGLa",
+	            Instant.now());
+		User USER_TWO =
+			 new User(
+	             UUID.randomUUID(),
+	            "username two",
+	            "$2a$10$.e.4EEfngEXmxAO085XnYOmDntkqod0C384jOR9oagwxMnPNHaGLa",
+			    Instant.now());
+		mockUserStore.addUser(USER_ONE);
+		mockUserStore.addUser(USER_TWO);
+	
 		
 	    adminServlet.doGet(mockRequest, mockResponse);
 	    
-	    Mockito.verify(mockRequest).setAttribute("userCount", userCount);
-	    Mockito.verify(mockRequest).setAttribute("messageCount", messageCount);
-	    Mockito.verify(mockRequest).setAttribute("conversationCount", conversationCount);
+	    Mockito.verify(mockRequest).setAttribute("userCount", 2);
 	    Mockito.verify(mockRequestDispatcher).forward(mockRequest, mockResponse);
 	  }
+	
+	@Test
+	public void testDoGetMessages() throws IOException, ServletException {
+		Message MESSAGE_ONE =
+		        new Message(
+				    UUID.randomUUID(), 
+				    UUID.randomUUID(), 
+				    UUID.randomUUID(), 
+				    "contents_one", 
+				    Instant.now());
+		Message MESSAGE_TWO =
+		        new Message(
+				    UUID.randomUUID(), 
+				    UUID.randomUUID(), 
+				    UUID.randomUUID(), 
+				    "contents_two", 
+				    Instant.now());
+		mockMessageStore.addMessage(MESSAGE_ONE);
+		mockMessageStore.addMessage(MESSAGE_TWO);
+	    adminServlet.doGet(mockRequest, mockResponse);
 
+		
+	    Mockito.verify(mockRequest).setAttribute("messageCount", 2);
+	}
+
+	@Test
+	public void testDoGetConversation() throws IOException, ServletException {
+		Conversation CONVERSATION_ONE =
+		        new Conversation(
+		        UUID.randomUUID(),
+				UUID.randomUUID(),
+				"title_one",
+				Instant.now());
+		Conversation CONVERSATION_TWO =
+		        new Conversation(
+		        UUID.randomUUID(),
+				UUID.randomUUID(),
+				"title_two",
+				Instant.now());
+		mockConversationStore.addConversation(CONVERSATION_ONE);
+		mockConversationStore.addConversation(CONVERSATION_TWO);
+	    adminServlet.doGet(mockRequest, mockResponse);
+
+		
+		Mockito.verify(mockRequest).setAttribute("conversationCount", 2);
+	}
 }
