@@ -35,9 +35,14 @@ public class Activity {
 
   @Override
   public boolean equals(Object object) {
-    Activity activity = (Activity)object;
-    if (!this.creationTime.equals(activity.creationTime)) return false;
-    if (!this.output.equals(activity.output)) return false;
-    return true;
+    try {
+      Activity activity = (Activity) object;
+      if (!this.creationTime.equals(activity.creationTime)) return false;
+      if (!this.output.equals(activity.output)) return false;
+      return true;
+    }
+    catch (IllegalArgumentException e) {
+      return false;
+    }
   }
 }

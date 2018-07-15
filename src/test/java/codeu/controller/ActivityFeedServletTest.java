@@ -35,6 +35,7 @@ public class ActivityFeedServletTest {
   private ConversationStore mockConversationStore;
   private UserStore mockUserStore;
   private TimeZone chicagoTimeZone = TimeZone.getTimeZone("America/Chicago");
+  private TimeZone originalTimeZone = TimeZone.getDefault();
 
   private final UUID CONVERSATION_ID_ONE = UUID.randomUUID();
   private final UUID USER_ID_ONE = UUID.randomUUID();
@@ -96,6 +97,11 @@ public class ActivityFeedServletTest {
     TimeZone.setDefault(chicagoTimeZone);
   }
 
+  /**
+   * The Activity Feed must load even when there is no activity in the chat app.
+   * @throws IOException
+   * @throws ServletException
+   */
   @Test
   public void testDoGetNothing() throws IOException, ServletException {
     List<Activity> noActivities = new ArrayList<>();
@@ -106,6 +112,13 @@ public class ActivityFeedServletTest {
     Mockito.verify(mockRequestDispatcher).forward(mockRequest, mockResponse);
   }
 
+  /**
+   * In most cases the Activity Feed will contain Users, Messages, and Conversations, not just one of each. These
+   * Activities will be related to each other in some way, as both Messages and Conversations are dependent on
+   * other types.
+   * @throws IOException
+   * @throws ServletException
+   */
   @Test
   public void testDoGetOneOfEach() throws IOException, ServletException {
     final List<Message> messageList = new ArrayList<>();
@@ -136,6 +149,12 @@ public class ActivityFeedServletTest {
     Mockito.verify(mockRequest).setAttribute("activities", allActivities);
   }
 
+  /**
+   * Users are the only type that are able to be tested individually, because they have no dependencies on
+   * Conversations or Messages.
+   * @throws IOException
+   * @throws ServletException
+   */
   @Test
   public void testDoGetUserOnly() throws IOException, ServletException {
     final List<User> userList = new ArrayList<>();
@@ -152,6 +171,12 @@ public class ActivityFeedServletTest {
     Mockito.verify(mockRequest).setAttribute("activities", allActivities);
   }
 
+  /**
+   * Conversations can only be tested if Users are provided as well. The Activity Feed requires usable information
+   * for Users, Messages and Conversations in order to load correctly- every Conversation must have a User as its author.
+   * @throws IOException
+   * @throws ServletException
+   */
   @Test
   public void testDoGetUserAndConversationOnly() throws IOException, ServletException {
     final List<User> userList = new ArrayList<>();
@@ -175,9 +200,13 @@ public class ActivityFeedServletTest {
     Mockito.verify(mockRequest).setAttribute("activities", allActivities);
   }
 
+  /**
+   * Returns time zone default to user's zone. The zone was changed during testing to ensure all tests occur in the same
+   * time zone.
+   */
   @After
   public void teardown() {
-    TimeZone.setDefault(TimeZone.getDefault());
+    TimeZone.setDefault(originalTimeZone);
   }
 
 }
