@@ -64,6 +64,20 @@ public class UserStoreTest {
 	  
   }
   @Test
+  public void testGetAllUsers() {
+    List<User> testList = new ArrayList<>();
+    testList.add(USER_ONE);
+    testList.add(USER_TWO);
+    testList.add(USER_THREE);
+
+    List<User> resultList = userStore.getAllUsers();
+
+    for (int i = 0; i < testList.size(); ++i) {
+      assertEquals(testList.get(i),resultList.get(i));
+    }
+  }
+
+  @Test
   public void testGetUser_byUsername_found() {
     User resultUser = userStore.getUser(USER_ONE.getName());
 

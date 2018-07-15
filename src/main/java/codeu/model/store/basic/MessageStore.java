@@ -90,6 +90,10 @@ public class MessageStore {
     return messagesInConversation;
   }
 
+  public List<Message> getAllMessages() {
+    return messages;
+  }
+
   /** Sets the List of Messages stored by this MessageStore. */
   public void setMessages(List<Message> messages) {
     this.messages = messages;
