@@ -1,6 +1,5 @@
 package codeu.controller;
 
-import codeu.model.data.BotStructure;
 import codeu.model.data.BotRequest;
 import codeu.model.data.Conversation;
 import codeu.model.data.Message;
@@ -8,6 +7,7 @@ import codeu.model.data.User;
 import codeu.model.store.basic.ConversationStore;
 import codeu.model.store.basic.MessageStore;
 
+import javax.servlet.http.HttpServletResponse;
 import java.time.Instant;
 import java.util.UUID;
 
@@ -18,12 +18,12 @@ import java.util.UUID;
  */
 public class RocketBotHandler implements BotHandlerInterface {
 
-  private String BOT_NAME = "Rocket Bot";
-  private String BOT_OUTPUT = "3...2...1...BLASTOFF!";
-  private UUID BOT_USER_ID = UUID.randomUUID();
-
   /** Handles bot requests and sends as messages to conversations. */
   public void handler(BotRequest request) {
+    String BOT_NAME = "Rocket Bot";
+    String BOT_OUTPUT = "3...2...1...BLASTOFF!";
+    UUID BOT_USER_ID = UUID.randomUUID();
+
     User botUser = new User(
                        BOT_USER_ID,
                        BOT_NAME,
@@ -33,7 +33,7 @@ public class RocketBotHandler implements BotHandlerInterface {
 
     // Find conversation where command was sent/bot was triggered
     UUID conversationId = request.getConversationId();
-    Conversation conversation = findConversation(conversationId);
+    Conversation conversation = conversationStore.getConversationWithId(conversationId);
 
     // Convert output and required arguments into Message
     Message message = new Message(
@@ -45,6 +45,8 @@ public class RocketBotHandler implements BotHandlerInterface {
     messageStore.addMessage(message);
 
     // somehow send message to conversation
+    // may need to invoke the doPost() function of ChatServlet, unless it auto-updates when new Message is added
+
   }
 
   /** Store class that gives access to Conversations. */
@@ -53,7 +55,4 @@ public class RocketBotHandler implements BotHandlerInterface {
   /** Store class that gives access to Messages. */
   private MessageStore messageStore = MessageStore.getInstance();
 
-  private Conversation findConversation(UUID conversationID) {
-    return conversationStore.getConversationWithId(conversationID);
-  }
 }
