@@ -93,6 +93,21 @@ public class UserStore {
     return null;
   }
 
+  /** Find and return User list. */
+  public List<User> getAllUsers() {
+    return users;
+  }
+
+  /** Find and return the User with the given UUID. */
+  public User getUserWithId(UUID id) {
+    for (User user : users) {
+      if (user.getId().equals(id)) {
+        return user;
+      }
+    }
+    return null;
+  }
+
   /**
    * Add a new user to the current set of users known to the application. This should only be called
    * to add a new user, not to update an existing user.
@@ -127,4 +142,3 @@ public class UserStore {
     this.users = users;
   }
 }
-
