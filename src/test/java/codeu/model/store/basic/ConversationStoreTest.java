@@ -64,7 +64,7 @@ public class ConversationStoreTest {
   @Test
   public void testGetNumConversations() {
 	  int numConversations = conversationStore.getNumConversations();
-	  Assert.assertEquals(1, numConversations);
+	  Assert.assertEquals(3, numConversations);
   }
 
   @Test

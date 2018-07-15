@@ -62,7 +62,7 @@ public class AdminServlet extends HttpServlet {
 	 * This function fires when a user requests the /admin URL. It forwards the
 	 * request to adminpage.jsp
 	 */
-	@Override
+	
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		String username =  (String) request.getSession().getAttribute("user");
 		User user = userStore.getUser(username);
