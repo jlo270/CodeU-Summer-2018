@@ -22,17 +22,6 @@ public class RocketBotHandler implements BotHandlerInterface {
   private String BOT_OUTPUT = "3...2...1...BLASTOFF!";
   private UUID BOT_USER_ID = UUID.randomUUID();
 
-  /** BotStructure class defines bot details. */
-  /*private BotStructure currentBot = new BotStructure(
-      new User(
-          UUID.randomUUID(),
-          BOT_NAME,
-          "$2a$10$/zf4WlT2Z6tB5sULB9Wec.QQdawmF0f1SbqBw5EeJg5uoVpKFFXAa",
-          Instant.now()),
-      BOT_NAME,
-      null,
-      "3...2...1...BLASTOFF!");*/
-
   /** Handles bot requests and sends as messages to conversations. */
   public void handler(BotRequest request) {
     User botUser = new User(
