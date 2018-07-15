@@ -1,7 +1,6 @@
 package codeu.controller;
 
 import codeu.model.data.BotRequest;
-import codeu.model.data.BotStructure;
 
 /**
  * The interface which is implemented by each bot type in order to produce the desired

@@ -1,5 +1,6 @@
 package codeu.model.data;
 
+/** Class representing the BotStructure, which establishes the User that represents the bot. */
 public class BotStructure {
   private User botUser;
   private String botName;
