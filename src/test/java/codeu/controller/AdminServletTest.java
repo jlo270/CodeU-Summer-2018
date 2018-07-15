@@ -104,7 +104,7 @@ public class AdminServletTest {
   }
 
   @Test
-  public void testDoGetConversation() throws IOException, ServletException {
+  public void testDoGetConversations() throws IOException, ServletException {
     Conversation CONVERSATION_ONE = 
         new Conversation(
             UUID.randomUUID(), 
