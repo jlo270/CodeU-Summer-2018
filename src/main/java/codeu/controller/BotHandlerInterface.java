@@ -3,8 +3,10 @@ package codeu.controller;
 import codeu.model.data.BotRequest;
 
 /**
- * The interface which is implemented by each bot type in order to produce the desired
- * output. Every bot have a bot-specific handler which implements BotHandlerInterface.
+ * Defines interface for all bots to implement. Bots are invoked by users entering a
+ * regex-matched syntax, which may or may not pass additional arguments into implementing
+ * classes. Those implementations will return a string to be posted into the conversation
+ * that executed the command.
  */
 public interface BotHandlerInterface {
   /**
@@ -12,6 +14,6 @@ public interface BotHandlerInterface {
    * locates the conversation where it was triggered, consolidates the desired output
    * into a single string and sends that string as a Message in the located Conversation.
    */
-  public String handler(BotRequest request);
+  public void handler(BotRequest request);
 }
 
