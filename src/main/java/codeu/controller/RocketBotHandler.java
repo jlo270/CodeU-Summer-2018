@@ -43,8 +43,8 @@ public class RocketBotHandler implements BotHandlerInterface {
         Instant.now());
     messageStore.addMessage(message);
 
-    // somehow send message to conversation
-    // may need to invoke the doPost() function of ChatServlet, unless it auto-updates when new Message is added
+    // Send message to conversation
+    // May need to invoke the doPost() function of ChatServlet, unless it auto-updates when new Message is added
 
   }
 
