@@ -16,14 +16,14 @@ public class parsingEngine {
 	/* 
 	 * Here, regex is a better way to parse bot commands rather than matching them with some keywords.
 	 * Regex can parse varying bot request according to pattern. 
-	 * For example, the following Regex can parse "/time", "/  time" or "/time    " as "time". 
+	 * For example, the following regex can parse "/time", "/  time" or "/time    " as "time". 
 	 * 
 	 */
 	
-	final String commandRegex = "^/(?P<command_name>\\w+)(?:\\s+(?P<argument>\\w+))?\\s*$";
+	static final String commandRegex = "^/(?P<command_name>\\w+)(?:\\s+(?P<argument>\\w+))?\\s*$";
 	
 	// compile the Regex command
-	 		Pattern pattern = Pattern.compile(commandRegex);
+	 static final Pattern pattern = Pattern.compile(commandRegex);
 	
  	public void ParseCommands(Message message){ 
  		final UUID conversationId;
