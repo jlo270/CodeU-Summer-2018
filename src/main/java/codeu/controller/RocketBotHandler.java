@@ -19,9 +19,11 @@ import java.util.UUID;
 public class RocketBotHandler implements BotHandlerInterface {
 
   private String BOT_NAME = "Rocket Bot";
+  private String BOT_OUTPUT = "3...2...1...BLASTOFF!";
+  private UUID BOT_USER_ID = UUID.randomUUID();
 
   /** BotStructure class defines bot details. */
-  private BotStructure currentBot = new BotStructure(
+  /*private BotStructure currentBot = new BotStructure(
       new User(
           UUID.randomUUID(),
           BOT_NAME,
@@ -29,28 +31,31 @@ public class RocketBotHandler implements BotHandlerInterface {
           Instant.now()),
       BOT_NAME,
       null,
-      "3...2...1...BLASTOFF!");
+      "3...2...1...BLASTOFF!");*/
 
   /** Handles bot requests and sends as messages to conversations. */
-  public String handler(BotRequest request) {
-    currentBot.setRequest(request);
+  public void handler(BotRequest request) {
+    User botUser = new User(
+                       BOT_USER_ID,
+                       BOT_NAME,
+          "$2a$10$/zf4WlT2Z6tB5sULB9Wec.QQdawmF0f1SbqBw5EeJg5uoVpKFFXAa",
+                       Instant.now());
+    //currentBot.setRequest(request);
 
     // Find conversation where command was sent/bot was triggered
-    UUID conversationId = currentBot.getRequest().getConversationId();
+    UUID conversationId = request.getConversationId();
     Conversation conversation = findConversation(conversationId);
 
     // Convert output and required arguments into Message
     Message message = new Message(
         UUID.randomUUID(),
         conversationId,
-        currentBot.getBotUser().getId(),
-        currentBot.getOutputMessage(),
+        BOT_USER_ID,
+        BOT_OUTPUT,
         Instant.now());
     messageStore.addMessage(message);
 
     // somehow send message to conversation
-
-    return currentBot.getOutputMessage(); // should we return void instead? Will anyone need this?
   }
 
   /** Store class that gives access to Conversations. */
