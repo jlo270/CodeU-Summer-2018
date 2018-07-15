@@ -2,32 +2,34 @@ package codeu.controller;
 
 import java.util.ArrayList;
 import java.util.UUID;
-
-import org.mockito.Mockito;
-
+import javax.servlet.ServletException;
+import java.io.IOException;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 import codeu.model.data.BotRequest;
-import codeu.controller.RocketBotHandler;
+
 
 public class RoutingEngineTest {
 
   private RoutingEngine routingEngine;
   private BotRequest mockBotRequest;
   private ArrayList<String> fakeList;
-  private RocketBotHandler rocketHandler;
+  
   
   @Before
-  public void setup() {
-    fakeList = new ArrayList<String>();
-    mockBotRequest =
-        new BotRequest("rocket", 
-            fakeList, 
-            UUID.randomUUID());
+  public void setup() { 
+    routingEngine = new RoutingEngine();
   }
   
   @Test
   public void testRoutingEngine() throws IOException, ServletException{
-    routingEngine.routeCommand(mockBotRequest);
+    mockBotRequest =
+        new BotRequest("test_command", 
+            fakeList, 
+            UUID.randomUUID());
+    String retVal = routingEngine.routeCommand(mockBotRequest);
     
-    Mockito.verify(rocketHandler).handler(request);
+    Assert.assertEquals(retVal, "error, command not found");
   }
 }
