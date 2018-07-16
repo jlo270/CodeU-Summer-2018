@@ -61,6 +61,12 @@ public class ConversationStoreTest {
 
     assertEquals(CONVERSATION_ONE, resultConversation);
   }
+  
+  @Test
+  public void testGetNumConversations() {
+	  int numConversations = conversationStore.getNumConversations();
+	  Assert.assertEquals(3, numConversations);
+  }
 
   @Test
   public void testGetConversationWithTitle_notFound() {
