@@ -70,6 +70,12 @@ public class ConversationStore {
     return conversations;
   }
 
+/** Access the current amount of all conversations **/
+  public int getNumConversations() {
+	  return conversations.size();
+  }
+  
+
   /** Add a new conversation to the current set of conversations known to the application. */
   public void addConversation(Conversation conversation) {
     conversations.add(conversation);
