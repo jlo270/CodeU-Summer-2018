@@ -23,30 +23,30 @@ import org.junit.Test;
 
 public class AdminServletTest {
 
-	private AdminServlet adminServlet;
-	private HttpServletRequest mockRequest;
-	private HttpServletResponse mockResponse;
-	private RequestDispatcher mockRequestDispatcher;
-	private ConversationStore mockConversationStore;
-	private MessageStore mockMessageStore;
-	private UserStore mockUserStore;
-	private PersistentStorageAgent mockPersistentStorageAgent;
+  private AdminServlet adminServlet;
+  private HttpServletRequest mockRequest;
+  private HttpServletResponse mockResponse;
+  private RequestDispatcher mockRequestDispatcher;
+  private ConversationStore mockConversationStore;
+  private MessageStore mockMessageStore;
+  private UserStore mockUserStore;
+  private PersistentStorageAgent mockPersistentStorageAgent;
+  private User user;
 
+  @Before
+  public void setup() {
+    adminServlet = new AdminServlet();
+    mockRequest = Mockito.mock(HttpServletRequest.class);
+    mockResponse = Mockito.mock(HttpServletResponse.class);
+    mockRequestDispatcher = Mockito.mock(RequestDispatcher.class);
+    Mockito.when(mockRequest.getRequestDispatcher("/WEB-INF/view/adminpage.jsp")).thenReturn(mockRequestDispatcher);
+    mockPersistentStorageAgent = Mockito.mock(PersistentStorageAgent.class);
 
-	@Before
-	public void setup() {
-		adminServlet = new AdminServlet();
-		mockRequest = Mockito.mock(HttpServletRequest.class);
-		mockResponse = Mockito.mock(HttpServletResponse.class);
-		mockRequestDispatcher = Mockito.mock(RequestDispatcher.class);
-		Mockito.when(mockRequest.getRequestDispatcher("/WEB-INF/view/adminpage.jsp")).thenReturn(mockRequestDispatcher);
-		mockPersistentStorageAgent = Mockito.mock(PersistentStorageAgent.class);
-		
-		mockConversationStore = ConversationStore.getTestInstance(mockPersistentStorageAgent);
-		adminServlet.setConversationStore(mockConversationStore);
+    mockConversationStore = ConversationStore.getTestInstance(mockPersistentStorageAgent);
+    adminServlet.setConversationStore(mockConversationStore);
 
-		mockMessageStore = MessageStore.getTestInstance(mockPersistentStorageAgent);
-		adminServlet.setMessageStore(mockMessageStore);
+    mockMessageStore = MessageStore.getTestInstance(mockPersistentStorageAgent);
+    adminServlet.setMessageStore(mockMessageStore);
 
 		mockUserStore = UserStore.getTestInstance(mockPersistentStorageAgent);
 		adminServlet.setUserStore(mockUserStore);
