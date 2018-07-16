@@ -1,10 +1,9 @@
 package codeu.controller;
 
 import codeu.model.data.BotRequest;
-import codeu.model.data.Conversation;
 import codeu.model.data.Message;
 import codeu.model.data.User;
-import codeu.model.store.basic.ConversationStore;
+import codeu.model.store.basic.UserStore;
 import codeu.model.store.basic.MessageStore;
 
 import java.time.Instant;
@@ -177,20 +176,20 @@ public class ZodiacBotHandler implements BotHandlerInterface {
     String BOT_OUTPUT = "Your sign is: " + starSign + "! " + starBio;
     UUID BOT_USER_ID = UUID.randomUUID();
 
-    User botUser = new User(
-        BOT_USER_ID,
-        BOT_NAME,
-        "$2a$10$/zf4WlT2Z6tB5sULB9Wec.QQdawmF0f1SbqBw5EeJg5uoVpKFFXAa",
-        Instant.now());
-
-    // Find conversation where command was sent/bot was triggered
-    UUID conversationId = request.getConversationId();
-    Conversation conversation = conversationStore.getConversationWithId(conversationId);
+    // Create User and add the User to UserStore only if it does not already exist.
+    if (userStore.getUserWithId(BOT_USER_ID) == null) {
+      User botUser = new User(
+          BOT_USER_ID,
+          BOT_NAME,
+          "$2a$10$/zf4WlT2Z6tB5sULB9Wec.QQdawmF0f1SbqBw5EeJg5uoVpKFFXAa",
+          Instant.now());
+      userStore.addUser(botUser);
+    }
 
     // Convert output and required arguments into Message
     Message message = new Message(
         UUID.randomUUID(),
-        conversationId,
+        request.getConversationId(),
         BOT_USER_ID,
         BOT_OUTPUT,
         Instant.now());
@@ -202,7 +201,7 @@ public class ZodiacBotHandler implements BotHandlerInterface {
   }
 
   /** Store class that gives access to Conversations. */
-  private ConversationStore conversationStore = ConversationStore.getInstance();
+  private UserStore userStore = UserStore.getInstance();
 
   /** Store class that gives access to Messages. */
   private MessageStore messageStore = MessageStore.getInstance();
