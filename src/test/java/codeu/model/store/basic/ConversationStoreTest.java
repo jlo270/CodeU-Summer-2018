@@ -20,6 +20,14 @@ public class ConversationStoreTest {
       new Conversation(
           UUID.randomUUID(), UUID.randomUUID(), "conversation_one", Instant.ofEpochMilli(1000));
 
+  private final Conversation CONVERSATION_TWO =
+      new Conversation(
+          UUID.randomUUID(), UUID.randomUUID(), "conversation_two", Instant.ofEpochMilli(1000));
+
+  private final Conversation CONVERSATION_THREE =
+      new Conversation(
+          UUID.randomUUID(), UUID.randomUUID(), "conversation_three", Instant.ofEpochMilli(1000));
+
   @Before
   public void setup() {
     mockPersistentStorageAgent = Mockito.mock(PersistentStorageAgent.class);
@@ -27,7 +35,23 @@ public class ConversationStoreTest {
 
     final List<Conversation> conversationList = new ArrayList<>();
     conversationList.add(CONVERSATION_ONE);
+    conversationList.add(CONVERSATION_TWO);
+    conversationList.add(CONVERSATION_THREE);
     conversationStore.setConversations(conversationList);
+  }
+
+  @Test
+  public void testGetAllConversations() {
+    List<Conversation> testList = new ArrayList<>();
+    testList.add(CONVERSATION_ONE);
+    testList.add(CONVERSATION_TWO);
+    testList.add(CONVERSATION_THREE);
+
+    List<Conversation> resultList = conversationStore.getAllConversations();
+
+    for (int i = 0; i < testList.size(); ++i) {
+      assertEquals(testList.get(i),resultList.get(i));
+    }
   }
 
   @Test
@@ -36,6 +60,12 @@ public class ConversationStoreTest {
         conversationStore.getConversationWithTitle(CONVERSATION_ONE.getTitle());
 
     assertEquals(CONVERSATION_ONE, resultConversation);
+  }
+  
+  @Test
+  public void testGetNumConversations() {
+	  int numConversations = conversationStore.getNumConversations();
+	  Assert.assertEquals(3, numConversations);
   }
 
   @Test
@@ -70,6 +100,22 @@ public class ConversationStoreTest {
 
     assertEquals(inputConversation, resultConversation);
     Mockito.verify(mockPersistentStorageAgent).writeThrough(inputConversation);
+  }
+
+  @Test
+  public void testGetConversationWithId_found() {
+    Conversation resultConversation =
+        conversationStore.getConversationWithId(CONVERSATION_ONE.getId());
+
+    assertEquals(CONVERSATION_ONE, resultConversation);
+  }
+
+  @Test
+  public void testGetConversationWithId_notFound() {
+    Conversation resultConversation =
+        conversationStore.getConversationWithId(UUID.randomUUID());
+
+    Assert.assertNull(resultConversation);
   }
 
   private void assertEquals(Conversation expectedConversation, Conversation actualConversation) {
