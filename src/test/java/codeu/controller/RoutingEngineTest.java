@@ -8,6 +8,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import codeu.model.data.BotRequest;
+import java.lang.IllegalArgumentException;
+
 
 
 public class RoutingEngineTest {
@@ -22,14 +24,18 @@ public class RoutingEngineTest {
     routingEngine = new RoutingEngine();
   }
   
-  @Test
-  public void testRoutingEngine() throws IOException, ServletException{
+  @Test (expected = IllegalArgumentException.class)
+  public void testDefault() throws IOException, ServletException{
     mockBotRequest =
         new BotRequest("test_command", 
             fakeList, 
             UUID.randomUUID());
-    String retVal = routingEngine.routeCommand(mockBotRequest);
+    routingEngine.routeCommand(mockBotRequest);
+  }
+  
+  @Test
+  public void testRoutingEngine() throws IOException, ServletException{
     
-    Assert.assertEquals(retVal, "error, command not found");
+    
   }
 }
