@@ -19,9 +19,6 @@ public class ConversationStoreTest {
   private final Conversation CONVERSATION_ONE =
       new Conversation(
           UUID.randomUUID(), UUID.randomUUID(), "conversation_one", Instant.ofEpochMilli(1000));
-  private final Conversation CONVERSATION_TWO =
-	  new Conversation(
-		  UUID.randomUUID(), UUID.randomUUID(), "conversation_two", Instant.now());
 
   private final Conversation CONVERSATION_TWO =
       new Conversation(
@@ -68,7 +65,7 @@ public class ConversationStoreTest {
   @Test
   public void testGetNumConversations() {
 	  int numConversations = conversationStore.getNumConversations();
-	  Assert.assertEquals(1, numConversations);
+	  Assert.assertEquals(3, numConversations);
   }
 
   @Test
