@@ -15,7 +15,7 @@
 
 body {
   margin: 0;
-  font-family: "Futura";
+  font-family: Futura, "Trebuchet MS", Arial, sans-serif;
   line-height: 1.6;
   font-size: 18px;
   line-height: 1.6;
@@ -24,7 +24,7 @@ body {
 }
 
 nav {
-  background-color: #236919;
+  background-color: #176729;
 }
 
 nav a {
