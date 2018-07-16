@@ -56,37 +56,47 @@ public class AdminServletTest {
 	            UUID.randomUUID(),
 	            "test username",
 	            "$2a$10$.e.4EEfngEXmxAO085XnYOmDntkqod0C384jOR9oagwxMnPNHaGLa",
-	            Instant.now());
+	            Instant.ofEpochMilli(1000), true);
 		mockUserStore.addUser(user);
 	}
 
 	
 	@Test
   public void testDoGetUsers() throws IOException, ServletException {
+	  HttpSession mockSession = Mockito.mock(HttpSession.class);
+	  Mockito.when(mockRequest.getSession()).thenReturn(mockSession);
+	  Mockito.when(mockSession.getAttribute("user")).thenReturn("test username");
+	  
     User USER_ONE =
         new User(
             UUID.randomUUID(),
                 "username one",
               "$2a$10$.e.4EEfngEXmxAO085XnYOmDntkqod0C384jOR9oagwxMnPNHaGLa",
-              Instant.now());
+              Instant.ofEpochMilli(3000));
     User USER_TWO =
        new User(
                UUID.randomUUID(),
               "username two",
               "$2a$10$.e.4EEfngEXmxAO085XnYOmDntkqod0C384jOR9oagwxMnPNHaGLa",
-          Instant.now());
+          Instant.ofEpochMilli(2000));
     mockUserStore.addUser(USER_ONE);
     mockUserStore.addUser(USER_TWO);
   
     
     adminServlet.doGet(mockRequest, mockResponse);
-      
-    Mockito.verify(mockRequest).setAttribute("userCount", 2);
+    Mockito.verify(mockRequest).setAttribute("newestUser", "username one");
+    Mockito.verify(mockRequest).setAttribute("userCount", 3);
+    Mockito.verify(mockRequest).setAttribute("messageCount", 0);
+    Mockito.verify(mockRequest).setAttribute("conversationCount", 0);
     Mockito.verify(mockRequestDispatcher).forward(mockRequest, mockResponse);
     }
   
   @Test
   public void testDoGetMessages() throws IOException, ServletException {
+    HttpSession mockSession = Mockito.mock(HttpSession.class);
+    Mockito.when(mockRequest.getSession()).thenReturn(mockSession);
+    Mockito.when(mockSession.getAttribute("user")).thenReturn("test username");
+    
     Message MESSAGE_ONE =
             new Message(
             UUID.randomUUID(), 
@@ -105,12 +115,18 @@ public class AdminServletTest {
     mockMessageStore.addMessage(MESSAGE_TWO);
     adminServlet.doGet(mockRequest, mockResponse);
 
-    
-      Mockito.verify(mockRequest).setAttribute("messageCount", 2);
+    Mockito.verify(mockRequest).setAttribute("newestUser", "test username");
+    Mockito.verify(mockRequest).setAttribute("userCount", 1);
+    Mockito.verify(mockRequest).setAttribute("messageCount", 2);
+    Mockito.verify(mockRequest).setAttribute("conversationCount", 0);
   }
 
   @Test
   public void testDoGetConversation() throws IOException, ServletException {
+    HttpSession mockSession = Mockito.mock(HttpSession.class);
+    Mockito.when(mockRequest.getSession()).thenReturn(mockSession);
+    Mockito.when(mockSession.getAttribute("user")).thenReturn("test username");
+    
     Conversation CONVERSATION_ONE =
             new Conversation(
             UUID.randomUUID(),
@@ -127,11 +143,17 @@ public class AdminServletTest {
     mockConversationStore.addConversation(CONVERSATION_TWO);
     adminServlet.doGet(mockRequest, mockResponse);
 
-    
+    Mockito.verify(mockRequest).setAttribute("newestUser", "test username");
+    Mockito.verify(mockRequest).setAttribute("userCount", 1);
+    Mockito.verify(mockRequest).setAttribute("messageCount", 0);
     Mockito.verify(mockRequest).setAttribute("conversationCount", 2);
   }
   
   @Test public void testDoGetNewest() throws IOException, ServletException {
+    HttpSession mockSession = Mockito.mock(HttpSession.class);
+    Mockito.when(mockRequest.getSession()).thenReturn(mockSession);
+    Mockito.when(mockSession.getAttribute("user")).thenReturn("test username");
+    
     User USER_ONE =
         new User(
             UUID.randomUUID(),
@@ -142,7 +164,10 @@ public class AdminServletTest {
     
     adminServlet.doGet(mockRequest, mockResponse);
     
-    Mockito.verify(mockRequest).setAttribute("newestUser", USER_ONE);
+    Mockito.verify(mockRequest).setAttribute("newestUser", "test username");
+    Mockito.verify(mockRequest).setAttribute("userCount", 2);
+    Mockito.verify(mockRequest).setAttribute("messageCount", 0);
+    Mockito.verify(mockRequest).setAttribute("conversationCount", 0);
   }
 
 }

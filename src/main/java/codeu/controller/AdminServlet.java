@@ -5,6 +5,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import codeu.model.data.Message;
 import codeu.model.data.User;
@@ -64,7 +65,8 @@ public class AdminServlet extends HttpServlet {
 	 */
 	
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-		String username =  (String) request.getSession().getAttribute("user");
+		HttpSession currentSession = request.getSession();
+	  String username =  (String) currentSession.getAttribute("user");
 		User user = userStore.getUser(username);
 		if(userStore.getNumUsers() != 0 ) { //checks if no users exist first
 			if(user == null) { //if not logged in, redirect
