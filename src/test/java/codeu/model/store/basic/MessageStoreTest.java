@@ -60,6 +60,12 @@ public class MessageStoreTest {
     assertEquals(MESSAGE_ONE, resultMessages.get(0));
     assertEquals(MESSAGE_TWO, resultMessages.get(1));
   }
+  
+  @Test
+  public void testGetNumMessages() {
+	  int numMessages = messageStore.getNumMessages();
+	  Assert.assertEquals(3, numMessages);
+  }
 
   @Test
   public void testAddMessage() {
