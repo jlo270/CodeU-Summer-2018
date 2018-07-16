@@ -1,13 +1,11 @@
 package codeu.controller;
 
 import codeu.model.data.BotRequest;
-import codeu.model.data.Conversation;
 import codeu.model.data.Message;
 import codeu.model.data.User;
-import codeu.model.store.basic.ConversationStore;
 import codeu.model.store.basic.MessageStore;
+import codeu.model.store.basic.UserStore;
 
-import javax.servlet.http.HttpServletResponse;
 import java.time.Instant;
 import java.util.UUID;
 
@@ -20,24 +18,24 @@ public class RocketBotHandler implements BotHandlerInterface {
 
   /** Handles bot requests and sends as messages to conversations. */
   public void handler(BotRequest request) {
-    String BOT_NAME = "Rocket Bot";
-    String BOT_OUTPUT = "3...2...1...BLASTOFF!";
-    UUID BOT_USER_ID = UUID.randomUUID();
+    final String BOT_NAME = "RocketBot";
+    final String BOT_OUTPUT = "3...2...1...BLASTOFF!";
+    final UUID BOT_USER_ID = UUID.randomUUID();
 
-    User botUser = new User(
-                       BOT_USER_ID,
-                       BOT_NAME,
+    // Create User and add the User to UserStore only if it does not already exist.
+    if (userStore.getUserWithId(BOT_USER_ID) == null) {
+      User botUser = new User(
+          BOT_USER_ID,
+          BOT_NAME,
           "$2a$10$/zf4WlT2Z6tB5sULB9Wec.QQdawmF0f1SbqBw5EeJg5uoVpKFFXAa",
-                       Instant.now());
-
-    // Find conversation where command was sent/bot was triggered
-    UUID conversationId = request.getConversationId();
-    Conversation conversation = conversationStore.getConversationWithId(conversationId);
+          Instant.now());
+      userStore.addUser(botUser);
+    }
 
     // Convert output and required arguments into Message
     Message message = new Message(
         UUID.randomUUID(),
-        conversationId,
+        request.getConversationId(),
         BOT_USER_ID,
         BOT_OUTPUT,
         Instant.now());
@@ -48,10 +46,10 @@ public class RocketBotHandler implements BotHandlerInterface {
 
   }
 
-  /** Store class that gives access to Conversations. */
-  private ConversationStore conversationStore = ConversationStore.getInstance();
-
   /** Store class that gives access to Messages. */
   private MessageStore messageStore = MessageStore.getInstance();
+
+  /** Store class that gives access to Users. */
+  private UserStore userStore = UserStore.getInstance();
 
 }
