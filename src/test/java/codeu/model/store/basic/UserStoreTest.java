@@ -48,6 +48,20 @@ public class UserStoreTest {
   }
 
   @Test
+  public void testGetAllUsers() {
+    List<User> testList = new ArrayList<>();
+    testList.add(USER_ONE);
+    testList.add(USER_TWO);
+    testList.add(USER_THREE);
+
+    List<User> resultList = userStore.getAllUsers();
+
+    for (int i = 0; i < testList.size(); ++i) {
+      assertEquals(testList.get(i),resultList.get(i));
+    }
+  }
+
+  @Test
   public void testGetUser_byUsername_found() {
     User resultUser = userStore.getUser(USER_ONE.getName());
 
@@ -73,6 +87,12 @@ public class UserStoreTest {
     User resultUser = userStore.getUser(UUID.randomUUID());
 
     Assert.assertNull(resultUser);
+  }
+  
+  @Test
+  public void testgetNumUsers() {
+	  int numUsers = userStore.getNumUsers();
+	  Assert.assertEquals(3, numUsers);
   }
 
   @Test
@@ -100,6 +120,7 @@ public class UserStoreTest {
   public void testIsUserRegistered_false() {
     Assert.assertFalse(userStore.isUserRegistered("fake username"));
   }
+  
 
   private void assertEquals(User expectedUser, User actualUser) {
     Assert.assertEquals(expectedUser.getId(), actualUser.getId());
