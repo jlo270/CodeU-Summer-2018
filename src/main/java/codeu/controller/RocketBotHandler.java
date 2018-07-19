@@ -16,21 +16,13 @@ import java.util.UUID;
  */
 public class RocketBotHandler implements BotHandlerInterface {
 
+  static final String BOT_NAME = "RocketBot";
+  static final String BOT_OUTPUT = "3...2...1...BLASTOFF!";
+
   /** Handles bot requests and sends as messages to conversations. */
   public void handler(BotRequest request) {
-    final String BOT_NAME = "RocketBot";
-    final String BOT_OUTPUT = "3...2...1...BLASTOFF!";
-    final UUID BOT_USER_ID = UUID.randomUUID();
-
-    // Create User and add the User to UserStore only if it does not already exist.
-    if (userStore.getUserWithId(BOT_USER_ID) == null) {
-      User botUser = new User(
-          BOT_USER_ID,
-          BOT_NAME,
-          "$2a$10$/zf4WlT2Z6tB5sULB9Wec.QQdawmF0f1SbqBw5EeJg5uoVpKFFXAa",
-          Instant.now());
-      userStore.addUser(botUser);
-    }
+    final User botUser = userStore.getOrCreateUserWithName(BOT_NAME);
+    final UUID BOT_USER_ID = botUser.getId();
 
     // Convert output and required arguments into Message
     Message message = new Message(
@@ -39,11 +31,9 @@ public class RocketBotHandler implements BotHandlerInterface {
         BOT_USER_ID,
         BOT_OUTPUT,
         Instant.now());
-    messageStore.addMessage(message);
 
     // Send message to conversation
-    // May need to invoke the doPost() function of ChatServlet, unless it auto-updates when new Message is added
-
+    messageStore.addMessage(message);
   }
 
   /** Store class that gives access to Messages. */
