@@ -38,7 +38,7 @@
       style="width:75%; margin-left:auto; margin-right:auto; margin-top: 50px;">
 
       <h1>Welcome to Charmer Chat!</h1>
-      <h2>Brought to you by Team 3, The Charmers</h2>
+      <h2>Brought to you by Team 3: The Charmers</h2>
 
       <ul>
         <li><a href="/login">Sign in</a> to get started.</li>
@@ -46,7 +46,7 @@
             create or join a conversation.</li>
         <li>View the <a href="/about.jsp">about</a> page to learn more about the
             project and team members.</li>
-        <li>Check out the <a href="/activityfeed.jsp">Activity Feed</a> to stay up to date
+        <li>Check out the <a href="/activity">activity feed</a> to stay up to date
             with everything happening on Charmer Chat.</li>
       </ul>
     </div>
