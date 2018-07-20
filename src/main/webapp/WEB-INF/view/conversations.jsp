@@ -21,6 +21,7 @@
 <head>
   <title>Conversations</title>
   <link rel="stylesheet" href="/css/main.css">
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 </head>
 <body>
 

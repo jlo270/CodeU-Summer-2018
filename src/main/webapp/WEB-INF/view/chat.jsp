@@ -27,6 +27,7 @@ List<Message> messages = (List<Message>) request.getAttribute("messages");
 <head>
   <title><%= conversation.getTitle() %></title>
   <link rel="stylesheet" href="/css/main.css" type="text/css">
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 
   <style>
     #chat {

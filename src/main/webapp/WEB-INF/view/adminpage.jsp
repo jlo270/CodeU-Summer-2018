@@ -12,6 +12,7 @@ String conversationCount = request.getAttribute("conversationCount").toString();
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <title>Admin Page</title>
   <link rel="stylesheet" href="/css/main.css">
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 </head>
 <body>
   <nav>
