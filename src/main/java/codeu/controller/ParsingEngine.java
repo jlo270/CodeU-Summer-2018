@@ -36,7 +36,7 @@ public class ParsingEngine {
     
     // If match is found, pass the command to RoutingEngine.
     if (match.find()) {
-      final BotRequest request = new BotRequest(match.group("commandName"), match.group("argument"),
+      final BotRequest request = new BotRequest(match.group("commandName"), match.group("arguments"),
     		  message.getConversationId());;
 
       RoutingEngine.routeCommand(request);
