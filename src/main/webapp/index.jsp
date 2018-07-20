@@ -16,7 +16,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>CodeU Chat App</title>
+  <title>Charmer Chat</title>
   <link rel="stylesheet" href="/css/main.css">
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 </head>
