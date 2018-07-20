@@ -24,7 +24,7 @@ public class ParsingEngine {
    * /command arg1 arg2 arg3 arg4
    */
 
-  static final String commandRegex = "^/(?P<command_name>\\w+)(?:\\s+(?P<argument>\\w+))?\\s*$";
+  static final String commandRegex = "^/(?<commandName>\\w+)(\\s+(?<arguments>\\w+))*$";
 
   // compile the Regex command
   static final Pattern pattern = Pattern.compile(commandRegex);
@@ -36,7 +36,7 @@ public class ParsingEngine {
     
     // If match is found, pass the command to RoutingEngine.
     if (match.find()) {
-      final BotRequest request = new BotRequest(match.group("command_name"), match.group("argument"),
+      final BotRequest request = new BotRequest(match.group("commandName"), match.group("argument"),
     		  message.getConversationId());;
 
       RoutingEngine.routeCommand(request);
