@@ -22,7 +22,7 @@
 <body>
 
   <nav>
-    <a id="navTitle" href="/">CodeU Chat App</a>
+    <a id="navTitle" href="/">Charmer Chat</a>
     <a href="/conversations">Conversations</a>
     <% if(request.getSession().getAttribute("user") != null){ %>
       <a>Hello <%= request.getSession().getAttribute("user") %>!</a>
@@ -30,14 +30,15 @@
       <a href="/login">Login</a>
     <% } %>
     <a href="/about.jsp">About</a>
+    <a href="/activity">Activity Feed</a>
   </nav>
 
   <div id="container">
     <div
       style="width:75%; margin-left:auto; margin-right:auto; margin-top: 50px;">
 
-      <h1>CodeU ChatApp by The Charmers</h1>
-      <h2>Welcome!</h2>
+      <h1>Welcome to Charmer Chat!</h1>
+      <h2>Brought to you by Team 3: The Charmers</h2>
 
       <ul>
         <li><a href="/login">Sign in</a> to get started.</li>
@@ -45,6 +46,8 @@
             create or join a conversation.</li>
         <li>View the <a href="/about.jsp">about</a> page to learn more about the
             project and team members.</li>
+        <li>Check out the <a href="/activity">activity feed</a> to stay up to date
+            with everything happening on Charmer Chat.</li>
       </ul>
     </div>
   </div>

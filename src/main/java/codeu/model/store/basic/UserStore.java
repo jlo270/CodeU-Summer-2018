@@ -57,7 +57,12 @@ public class UserStore {
 
   /** The in-memory list of Users. */
   private List<User> users;
-
+  
+  /** Access the current amount of users **/
+  public int getNumUsers() {
+	  return users.size();
+  }
+  
   /** This class is a singleton, so its constructor is private. Call getInstance() instead. */
   private UserStore(PersistentStorageAgent persistentStorageAgent) {
     this.persistentStorageAgent = persistentStorageAgent;
@@ -85,6 +90,21 @@ public class UserStore {
    * @return null if the UUID does not match any existing User.
    */
   public User getUser(UUID id) {
+    for (User user : users) {
+      if (user.getId().equals(id)) {
+        return user;
+      }
+    }
+    return null;
+  }
+
+  /** Find and return User list. */
+  public List<User> getAllUsers() {
+    return users;
+  }
+
+  /** Find and return the User with the given UUID. */
+  public User getUserWithId(UUID id) {
     for (User user : users) {
       if (user.getId().equals(id)) {
         return user;
@@ -127,4 +147,3 @@ public class UserStore {
     this.users = users;
   }
 }
-
