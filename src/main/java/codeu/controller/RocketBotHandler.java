@@ -42,4 +42,12 @@ public class RocketBotHandler implements BotHandlerInterface {
   /** Store class that gives access to Users. */
   private UserStore userStore = UserStore.getInstance();
 
+  public void setUserStore(UserStore value) {
+    userStore = value;
+  }
+
+  public void setMessageStore(MessageStore value) {
+    messageStore = value;
+  }
+
 }

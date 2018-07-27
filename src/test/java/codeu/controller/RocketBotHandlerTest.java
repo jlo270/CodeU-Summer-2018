@@ -1,9 +1,9 @@
 package codeu.controller;
 
 import codeu.model.data.BotRequest;
-import codeu.model.data.Message;
 import codeu.model.data.User;
 import codeu.model.store.basic.UserStore;
+import codeu.model.store.basic.MessageStore;
 import codeu.model.store.persistence.PersistentStorageAgent;
 import org.junit.Before;
 import org.junit.Test;
@@ -17,20 +17,19 @@ import org.junit.Assert;
 
 public class RocketBotHandlerTest {
   private UserStore mockUserStore;
+  private MessageStore mockMessageStore;
   private final UUID CONVERSATION_ID_ONE = UUID.randomUUID();
   private final UUID USER_ID_ONE = UUID.randomUUID();
-  private final Message MESSAGE_ONE =
-      new Message(
-          UUID.randomUUID(),
-          CONVERSATION_ID_ONE,
-          USER_ID_ONE,
-          "3...2...1...BLASTOFF!",
-          Instant.ofEpochMilli(1000));
+  private RocketBotHandler rocketBot;
 
   @Before
   public void setup() {
     PersistentStorageAgent mockPersistentStorageAgent = Mockito.mock(PersistentStorageAgent.class);
     mockUserStore = UserStore.getTestInstance(mockPersistentStorageAgent);
+    mockMessageStore = MessageStore.getTestInstance(mockPersistentStorageAgent);
+    rocketBot = new RocketBotHandler();
+    rocketBot.setUserStore(mockUserStore);
+    rocketBot.setMessageStore(mockMessageStore);
   }
 
   /**
@@ -50,8 +49,6 @@ public class RocketBotHandlerTest {
     ArrayList<String> args = new ArrayList<>();
     BotRequest request = new BotRequest("rocket",args,CONVERSATION_ID_ONE);
 
-    RocketBotHandler rocketBot = new RocketBotHandler();
-
     rocketBot.handler(request);
     Assert.assertEquals(mockUserStore.getUser("RocketBot"),existingUser);
   }
@@ -68,15 +65,8 @@ public class RocketBotHandlerTest {
     ArrayList<String> args = new ArrayList<>();
     BotRequest request = new BotRequest("rocket",args,CONVERSATION_ID_ONE);
 
-    User testUser = new User(
-        USER_ID_ONE,
-        "RocketBot",
-        "unusable-password-hash",
-        Instant.now());
-
-    RocketBotHandler rocketBot = new RocketBotHandler();
-
+    Assert.assertNull(mockUserStore.getUser("RocketBot"));
     rocketBot.handler(request);
-    Assert.assertEquals(mockUserStore.getUser("RocketBot"),testUser);
+    Assert.assertNotNull(mockUserStore.getUser("RocketBot"));
   }
 }
