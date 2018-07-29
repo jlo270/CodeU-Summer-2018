@@ -16,8 +16,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Register</title>
+  <title>Register - Charmer Chat</title>
   <link rel="stylesheet" href="/css/main.css">
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 </head>
 <body>
 
