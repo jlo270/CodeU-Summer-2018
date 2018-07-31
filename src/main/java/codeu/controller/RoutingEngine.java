@@ -15,8 +15,8 @@ public class RoutingEngine {
   public void routeCommand(BotRequest request) {
 
     switch (request.getCommand()) {
-      //case = "rocket":
-        //botHandler = new RocketBotHandler();
+      case = "rocket":
+        botHandler = new RocketBotHandler();
       default:
         throw new IllegalArgumentException();
     }
