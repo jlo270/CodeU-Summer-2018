@@ -13,13 +13,15 @@ public class RoutingEngine {
    * needs to be updated for each bot
    */
   public void routeCommand(BotRequest request) {
-
+    boolean doThrow = false;
     switch (request.getCommand()) {
-      case = "rocket":
+      case  "rocket":
         botHandler = new RocketBotHandler();
       default:
-        throw new IllegalArgumentException();
+        doThrow = true;
     }
+    if(doThrow)
+      throw new IllegalArgumentException();
     botHandler.handler(request);
   }
 }
