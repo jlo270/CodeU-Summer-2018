@@ -12,8 +12,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Activity Feed</title>
+  <title>Activity Feed - Charmer Chat</title>
   <link rel="stylesheet" href="/css/main.css">
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 </head>
 <body>
   <nav>

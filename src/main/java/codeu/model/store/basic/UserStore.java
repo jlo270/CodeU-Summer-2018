@@ -19,6 +19,7 @@ import codeu.model.store.persistence.PersistentStorageAgent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.time.Instant;
 
 /**
  * Store class that uses in-memory data structures to hold values and automatically loads from and
@@ -137,6 +138,24 @@ public class UserStore {
       }
     }
     return false;
+  }
+
+  /**
+   * Checks if a User exists. If they do not, one is created with the given username and returned.
+   * If the User does exist, that User is found and returned.
+   */
+  public User getOrCreateUserWithName(final String username) {
+    final User existing_user = getUser(username);
+    if (existing_user != null) {
+      return existing_user;
+    }
+    final User newUser = new User(
+        UUID.randomUUID(),
+        username,
+        "unusable-password",
+        Instant.now());
+    addUser(newUser);
+    return newUser;
   }
 
   /**
