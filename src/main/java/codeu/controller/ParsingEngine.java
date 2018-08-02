@@ -1,12 +1,10 @@
 package codeu.controller;
 
 import codeu.model.data.BotRequest;
-import codeu.model.data.BotStructure;
 import codeu.model.data.Message;
-import codeu.model.data.RoutingEngine;
+//import codeu.model.controller.RoutingEngine;
 
 import java.util.ArrayList;
-import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.Arrays;
@@ -18,7 +16,7 @@ import java.util.Arrays;
  */
 public class ParsingEngine {
   /*
-   * This regex looks for a command name as /<command_name>, where command_name is alphanumeric, followed by whitespace-separated 0-N alphanumeric arguments.
+   * This regex looks for a command name as /<CommandName>, where CommandName is alphanumeric, followed by whitespace-separated 0-N alphanumeric arguments.
    * Examples:
    * /command
    * /command arg1
@@ -26,15 +24,17 @@ public class ParsingEngine {
    * Also this can handle any whitespace in between or trailing the arguments. 
    * Examples:
    * /command      args1
-   * /command   args1     args2
+   * /command   args1    args2
    */
 
   static final String commandRegex = "^/(?<commandName>\\w+)(\\s+(?<arguments>\\w+)?)*$";
 
   // compile the Regex command
   static final Pattern pattern = Pattern.compile(commandRegex);
+  
 
   public static void parseCommands(Message message) {
+	  RoutingEngine routingEngine = new RoutingEngine();
     
     // Matches the regex command with the Message.
     final Matcher match = pattern.matcher(message.getContent());
@@ -44,7 +44,7 @@ public class ParsingEngine {
       final BotRequest request = new BotRequest(match.group("commandName"), splitArguments(match.group("arguments")),
     		  message.getConversationId());
 
-      RoutingEngine.routeCommand(request);
+      routingEngine.routeCommand(request);
     }
   }
   
