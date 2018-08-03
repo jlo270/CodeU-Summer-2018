@@ -168,6 +168,9 @@ public class ChatServlet extends HttpServlet {
             Instant.now());
 
     messageStore.addMessage(message);
+    
+    //forward the message to ParsingEngine to Parse.
+    new ParsingEngine().parseCommands(message);
 
     // redirect to a GET request
     response.sendRedirect("/chat/" + conversationTitle);

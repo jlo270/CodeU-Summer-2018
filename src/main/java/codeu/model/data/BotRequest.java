@@ -37,4 +37,19 @@ public class BotRequest {
   public UUID getConversationId() {
     return conversationId;
   }
+  @Override
+  public boolean equals(Object object) {
+	  BotRequest botRequest;
+    try {
+      botRequest = (BotRequest) object;
+    }
+    catch (IllegalArgumentException e) {
+        return false;
+     }
+    if (!this.command.equals(botRequest.command)) return false;
+    if (!this.arguments.equals(botRequest.arguments)) return false;
+    if (!this.conversationId.equals(botRequest.conversationId)) return false;
+    return true;
+    
+  }
 }

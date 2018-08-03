@@ -29,10 +29,11 @@ public class ParsingEngine {
 
   // compile the Regex command
   static final Pattern pattern = Pattern.compile(commandRegex);
+  private RoutingEngine routingEngine = new RoutingEngine();
   
 
-  public static void parseCommands(Message message) {
-	  RoutingEngine routingEngine = new RoutingEngine();
+  public void parseCommands(Message message) {
+	  
     
     // Matches the regex command with the Message.
     final Matcher match = pattern.matcher(message.getContent());
@@ -46,10 +47,14 @@ public class ParsingEngine {
     }
   }
   
-  public static ArrayList<String> splitArguments(String arguments){
+  private static ArrayList<String> splitArguments(String arguments){
 	  String[] splitStr = arguments.trim().split("\\s+");
 	  ArrayList<String> arrayList = new ArrayList<String>(Arrays.asList(splitStr));
 	  return arrayList;
 
+  }
+  public void setRoutingEngine(RoutingEngine value) {
+	  this.routingEngine = value ;
+	  
   }
 }
