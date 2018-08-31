@@ -106,6 +106,6 @@ public class RocketBotHandlerTest {
     Assert.assertEquals(messagesInConversation.get(0).getId(),rocketBot.getBotMessageId());
     Assert.assertEquals(messagesInConversation.get(0).getConversationId(),request.getConversationId());
 
-    //Assert.assertEquals(messagesInConversation.contains(testMessage), true);
+    //Assert.assertEquals(messagesInConversation.get(0), testMessage);
   }
 }
